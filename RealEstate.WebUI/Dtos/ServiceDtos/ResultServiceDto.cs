@@ -1,4 +1,4 @@
-﻿namespace RealEstate.WebUI.Dtos.WhoWeAreDetailDtos;
+﻿namespace RealEstate.WebUI.Dtos.ServiceDtos;
 
 public class ResultServiceDto
 {
