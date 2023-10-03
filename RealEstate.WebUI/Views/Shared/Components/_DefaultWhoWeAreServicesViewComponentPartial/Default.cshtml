@@ -1,0 +1,10 @@
+﻿@model List<RealEstate.WebUI.Dtos.ServiceDtos.ResultServiceDto>
+<ul class="w3l-right-book w3l-right-book-grid mt-md-5 mt-4">
+    @foreach (var service in Model)
+    {
+        if (service.ServiceStatus == true)
+        {
+            <li><span class="fa fa-check" aria-hidden="true"></span>@service.ServiceName</li>
+        }
+    }
+</ul>
