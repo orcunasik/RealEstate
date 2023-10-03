@@ -24,7 +24,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync()
     {
-        string query = "Select ProductId,Title,Price,City,District,CategoryName From Products inner join Categories on Products.CategoryId = Categories.CategoryId";
+        string query = "Select ProductId,Title,Price,City,District,CategoryName,Type,CoverImage,Address From Products inner join Categories on Products.CategoryId = Categories.CategoryId";
         using (var connection = _context.CreateConnection())
         {
             var products = await connection.QueryAsync<ResultProductWithCategoryDto>(query);
