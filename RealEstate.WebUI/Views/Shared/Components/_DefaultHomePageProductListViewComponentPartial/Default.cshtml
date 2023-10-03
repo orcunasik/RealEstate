@@ -8,11 +8,11 @@
             <div class="row pt-md-5 pt-4">
                 @foreach (var product in Model)
                 {
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-4 col-md-6 mb-3">
                         <a href="property-single.html">
                             <div class="box16">
                                 <div class="rentext-listing-category"><span>@product.Type</span><span>@product.CategoryName</span></div>
-                                <img class="img-fluid" src="@product.CoverImage" alt="Resim Bulunamadı">
+                                <img class="img-fluid" style="height:13.5em;width:43,75em" src="@product.CoverImage" alt="Resim Bulunamadı">
                                 <div class="box-content">
                                     <h3 class="title">TL @product.Price</h3>
                                     <span class="post">@product.Address - @product.District - @product.City</span>
