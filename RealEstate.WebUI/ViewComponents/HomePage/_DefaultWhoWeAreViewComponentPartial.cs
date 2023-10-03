@@ -15,15 +15,15 @@ public class _DefaultWhoWeAreViewComponentPartial : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync()
     {
         HttpClient client = _httpClientFactory.CreateClient();
-        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7201/api/WhoWeAreDetails/WhoWeAreDetailList");
+        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7201/api/WhoWeAreDetails/");
         if (responseMessage.IsSuccessStatusCode)
         {
             string jsonData = await responseMessage.Content.ReadAsStringAsync();
-            var value = JsonConvert.DeserializeObject<ResultWhoWeAreDetailDto>(jsonData);
-            ViewBag.Title = value.Title;
-            ViewBag.Subtitle = value.Subtitle;
-            ViewBag.Description1 = value.Description1;
-            ViewBag.Description2 = value.Description2;
+            var value = JsonConvert.DeserializeObject<List<ResultWhoWeAreDetailDto>>(jsonData);
+            ViewBag.Title = value[0].Title;
+            ViewBag.Subtitle = value[0].Subtitle;
+            ViewBag.Description1 = value[0].Description1;
+            ViewBag.Description2 = value[0].Description2;
 
             return View();
         }
