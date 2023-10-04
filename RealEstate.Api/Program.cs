@@ -1,6 +1,7 @@
 using RealEstate.Api.Models.DapperContext;
 using RealEstate.Api.Repositories.BottomGridRepository;
 using RealEstate.Api.Repositories.CategoryRepository;
+using RealEstate.Api.Repositories.PopularLocationRepository;
 using RealEstate.Api.Repositories.ProductRepository;
 using RealEstate.Api.Repositories.ServiceRepository;
 using RealEstate.Api.Repositories.WhoWeAreDetailRepository;
@@ -16,6 +17,7 @@ builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IWhoWeAreDetailRepository, WhoWeAreDetailRepository>();
 builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
 builder.Services.AddTransient<IBottomGridRepository, BottomGridRepository>();
+builder.Services.AddTransient<IPopularLocationRepository, PopularLocationRepository>();
 
 var app = builder.Build();
 
