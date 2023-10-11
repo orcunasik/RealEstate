@@ -1,8 +1,38 @@
-﻿
+﻿@model List<ResultCategoryDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-
-<h1>Kategoriler</h1>
-
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Kategoriler</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Kategori</th>
+                                <th scope="col">Durumu</th>
+                                <th scope="colgroup">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@category.CategoryId</th>
+                                    <td>@category.CategoryName</td>
+                                    <td>@category.Status</td>
+                                    <td><a href="#" class="btn btn-outline-primary">Güncelle</a></td>
+                                    <td><a href="#" class="btn btn-outline-danger">Sil</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
