@@ -3,12 +3,19 @@
     ViewData["Title"] = "Kategori Oluştur";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-
-<h3>Yeni Kategori</h3>
-<form method="post">
-    <label>Kategori Adı</label>
-    <input type="text" asp-for="CategoryName" class="form-control" />
-    <br />
-    <button class="btn btn-outline-success">Kaydet</button>
-</form>
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Kategoriler</h6>
+                <form method="post">
+                    <label>Kategori Adı</label>
+                    <input type="text" asp-for="CategoryName" class="form-control" />
+                    <br />
+                    <button class="btn btn-outline-success">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
