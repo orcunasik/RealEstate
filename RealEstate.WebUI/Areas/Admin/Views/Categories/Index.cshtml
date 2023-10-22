@@ -26,7 +26,7 @@
                                     <td>@category.CategoryName</td>
                                     <td>@category.Status</td>
                                     <td><a href="#" class="btn btn-outline-primary">Güncelle</a></td>
-                                    <td><a href="#" class="btn btn-outline-danger">Sil</a></td>
+                                    <td><a asp-controller="Categories" asp-action="DeleteCategory" asp-route-id="@category.CategoryId" class="btn btn-outline-danger">Sil</a></td>
                                 </tr>
                             }
                         </tbody>
