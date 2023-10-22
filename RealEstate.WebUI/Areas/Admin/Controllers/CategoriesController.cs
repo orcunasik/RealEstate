@@ -21,7 +21,7 @@ public class CategoriesController : Controller
         if (responseMessage.IsSuccessStatusCode)
         {
             string jsonData = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
+            List<ResultCategoryDto> values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
             return View(values);
         }
         return View();
@@ -39,7 +39,7 @@ public class CategoriesController : Controller
         HttpClient client = _httpClientFactory.CreateClient();
         string jsonData = JsonConvert.SerializeObject(categoryDto);
         StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        var responseMessage = await client.PostAsync("https://localhost:7201/api/Categories/", stringContent);
+        HttpResponseMessage responseMessage = await client.PostAsync("https://localhost:7201/api/Categories/", stringContent);
         if (responseMessage.IsSuccessStatusCode)
             return RedirectToAction("Index");
         return View();
@@ -49,6 +49,32 @@ public class CategoriesController : Controller
     {
         HttpClient client = _httpClientFactory.CreateClient();
         HttpResponseMessage responseMessage = await client.DeleteAsync($"https://localhost:7201/api/Categories/{id}");
+        if (responseMessage.IsSuccessStatusCode)
+            return RedirectToAction("Index");
+        return View();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateCategory(int id)
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+        HttpResponseMessage responseMessage = await client.GetAsync($"https://localhost:7201/api/Categories/{id}");
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            string jsonData = await responseMessage.Content.ReadAsStringAsync();
+            List<UpdateCategoryDto> values = JsonConvert.DeserializeObject<List<UpdateCategoryDto>>(jsonData);
+            return View(values);
+        }
+        return View();
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateCategory(UpdateCategoryDto categoryDto)
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+        string jsonData = JsonConvert.SerializeObject(categoryDto);
+        StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+        HttpResponseMessage responseMessage = await client.PutAsync("https://localhost:7201/api/Categories/", stringContent);
         if (responseMessage.IsSuccessStatusCode)
             return RedirectToAction("Index");
         return View();
