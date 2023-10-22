@@ -62,13 +62,13 @@ public class CategoriesController : Controller
         if (responseMessage.IsSuccessStatusCode)
         {
             string jsonData = await responseMessage.Content.ReadAsStringAsync();
-            List<UpdateCategoryDto> values = JsonConvert.DeserializeObject<List<UpdateCategoryDto>>(jsonData);
+            UpdateCategoryDto values = JsonConvert.DeserializeObject<UpdateCategoryDto>(jsonData);
             return View(values);
         }
         return View();
     }
 
-    [HttpPut]
+    [HttpPost]
     public async Task<IActionResult> UpdateCategory(UpdateCategoryDto categoryDto)
     {
         HttpClient client = _httpClientFactory.CreateClient();
