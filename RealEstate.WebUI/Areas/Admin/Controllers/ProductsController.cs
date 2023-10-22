@@ -4,6 +4,7 @@ using RealEstate.WebUI.Dtos.ProductDtos;
 
 namespace RealEstate.WebUI.Areas.Admin.Controllers;
 
+[Area("Admin")]
 public class ProductsController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;
