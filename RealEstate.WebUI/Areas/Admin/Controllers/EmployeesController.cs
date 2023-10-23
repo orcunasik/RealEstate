@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using RealEstate.WebUI.Dtos.CategoryDtos;
 using RealEstate.WebUI.Dtos.EmployeeDtos;
+using System.Text;
 
 namespace RealEstate.WebUI.Areas.Admin.Controllers;
 
@@ -24,6 +26,24 @@ public class EmployeesController : Controller
             List<ResultEmployeeDto> employees = JsonConvert.DeserializeObject<List<ResultEmployeeDto>>(jsonData);
             return View(employees);
         }
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult CreateEmployee()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateEmployee(CreateEmployeeDto employeeDto)
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+        string jsonData = JsonConvert.SerializeObject(employeeDto);
+        StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+        HttpResponseMessage responseMessage = await client.PostAsync("https://localhost:7201/api/Employees/", stringContent);
+        if (responseMessage.IsSuccessStatusCode)
+            return RedirectToAction("Index");
         return View();
     }
 }
