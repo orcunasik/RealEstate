@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace RealEstate.WebUI.ViewComponents.AdminLayout;
+namespace RealEstate.WebUI.Areas.Admin.ViewComponents.AdminLayout;
 
 public class _AdminNavbarViewComponentPartial : ViewComponent
 {
