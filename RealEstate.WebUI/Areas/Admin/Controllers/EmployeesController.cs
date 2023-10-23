@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using RealEstate.WebUI.Dtos.CategoryDtos;
 using RealEstate.WebUI.Dtos.EmployeeDtos;
 using System.Text;
 
@@ -42,6 +41,41 @@ public class EmployeesController : Controller
         string jsonData = JsonConvert.SerializeObject(employeeDto);
         StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
         HttpResponseMessage responseMessage = await client.PostAsync("https://localhost:7201/api/Employees/", stringContent);
+        if (responseMessage.IsSuccessStatusCode)
+            return RedirectToAction("Index");
+        return View();
+    }
+
+    public async Task<IActionResult> DeleteEmployee(int id)
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+        HttpResponseMessage responseMessage = await client.DeleteAsync($"https://localhost:7201/api/Employees/{id}");
+        if (responseMessage.IsSuccessStatusCode)
+            return RedirectToAction("Index");
+        return View();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateEmployee(int id)
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+        HttpResponseMessage responseMessage = await client.GetAsync($"https://localhost:7201/api/Employees/{id}");
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            string jsonData = await responseMessage.Content.ReadAsStringAsync();
+            UpdateEmployeeDto employee = JsonConvert.DeserializeObject<UpdateEmployeeDto>(jsonData);
+            return View(employee);
+        }
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateEmployee(UpdateEmployeeDto employeeDto)
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+        string jsonData = JsonConvert.SerializeObject(employeeDto);
+        StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+        HttpResponseMessage responseMessage = await client.PutAsync("https://localhost:7201/api/Employees/", stringContent);
         if (responseMessage.IsSuccessStatusCode)
             return RedirectToAction("Index");
         return View();
