@@ -8,43 +8,40 @@
     <div class="row g-4">
         <div class="col-12">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Tüm Ürünler</h6>
+                <h6 class="mb-4">İlan Listesi</h6>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Ürün</th>
+                                <th scope="col">İlan Başlığı</th>
+                                <th scope="col">Tipi</th>
                                 <th scope="col">Kategori</th>
                                 <th scope="col">Fiyatı</th>
                                 <th scope="col">Şehir</th>
                                 <th scope="col">İlçe</th>
-                                <th scope="col">Tipi</th>
-                                <th scope="col">Ana Resim</th>
-                                <th scope="col">Adres</th>
-                                <th scope="col" colspan="2">İşlemler</th>
+                                <th scope="col" colspan="3">İşlemler</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var product in Model)
+                            @foreach (ResultProductDto product in Model)
                             {
                                 <tr>
                                     <th scope="row">@product.ProductId</th>
                                     <td>@product.Title</td>
+                                    <td>@product.Type</td>
                                     <td>@product.CategoryName</td>
                                     <td>@product.Price</td>
                                     <td>@product.City</td>
                                     <td>@product.District</td>
-                                    <td>@product.Type</td>
-                                    <td>@product.CoverImage</td>
-                                    <td>@product.Address</td>                                   
-                                    <td><a asp-controller="Products" asp-action="UpdateProduct" asp-route-id="@product.ProductId" class="btn btn-outline-primary">Güncelle</a></td>
+                                    <td><a asp-controller="Default" asp-action="Index" asp-route-id="@product.ProductId" class="btn btn-outline-primary">Sitede Gör</a></td>
+                                    <td><a asp-controller="Products" asp-action="UpdateProduct" asp-route-id="@product.ProductId" class="btn btn-outline-warning">Güncelle</a></td>
                                     <td><a asp-controller="Products" asp-action="DeleteProduct" asp-route-id="@product.ProductId" class="btn btn-outline-danger">Sil</a></td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    <a asp-controller="Products" asp-action="CreateProduct" class="btn btn-outline-info">Yeni Ürün</a>
+                    <a asp-controller="Products" asp-action="CreateProduct" class="btn btn-outline-success">Yeni Ürün</a>
                 </div>
             </div>
         </div>
