@@ -25,4 +25,16 @@ public class ProductsController : Controller
         }
         return View();
     }
+
+    [HttpGet]
+    public async Task<IActionResult> CreateProduct()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateProduct(CreateProductDto productDto)
+    {
+        return View();
+    }
 }
