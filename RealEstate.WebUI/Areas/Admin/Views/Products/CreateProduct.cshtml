@@ -10,28 +10,30 @@
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Yeni İlan Girişi</h6>
                 <form method="post">
-                    <label>İlan Başlığı</label>
+                    <label asp-for="Title">İlan Başlığı</label>
                     <input type="text" asp-for="Title" class="form-control" />
                     <br />
-                    <label>İlan Türü</label>
+                    <label asp-for="Type">İlan Türü</label>
                     <input type="text" asp-for="Type" class="form-control" />
                     <br />
-                    <label>Kategori Adı</label>
-                    <input type="text" asp-for="CategoryName" class="form-control" />
+                    <label asp-for="CategoryId">Kategori Adı</label>
+                    <select asp-for="CategoryId" asp-items="@ViewBag.CategoryDatas" class="form-select">
+                        <option value="">Kategori Seçiniz</option>
+                    </select>
                     <br />
-                    <label>İlan Fiyatı</label>
+                    <label asp-for="Price">İlan Fiyatı</label>
                     <input type="number" asp-for="Price" class="form-control" />
                     <br />
-                    <label>Şehir</label>
+                    <label asp-for="City">Şehir</label>
                     <input type="text" asp-for="City" class="form-control" />
                     <br />
-                    <label>İlçe</label>
+                    <label asp-for="District">İlçe</label>
                     <input type="text" asp-for="District" class="form-control" />
                     <br />
-                    <label>Kapak Fotoğrafı</label>
+                    <label asp-for="CoverImage">Kapak Fotoğrafı</label>
                     <input type="text" asp-for="CoverImage" class="form-control" />
                     <br />
-                    <label>Açık Adresi</label>
+                    <label asp-for="Address">Açık Adresi</label>
                     <textarea asp-for="Address" class="form-control" rows="5"></textarea>
                     <br />
                     <button class="btn btn-outline-success">Kaydet</button>
