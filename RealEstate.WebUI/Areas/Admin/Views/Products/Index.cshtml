@@ -34,14 +34,14 @@
                                     <td>@product.Price</td>
                                     <td>@product.City</td>
                                     <td>@product.District</td>
-                                    <td><a asp-controller="Default" asp-action="Index" class="btn btn-outline-primary">Sitede Gör</a></td>
-                                    <td><a asp-controller="Products" asp-action="UpdateProduct" asp-route-id="@product.ProductId" class="btn btn-outline-warning">Güncelle</a></td>
-                                    <td><a asp-controller="Products" asp-action="DeleteProduct" asp-route-id="@product.ProductId" class="btn btn-outline-danger">Sil</a></td>
+                                    <td><a asp-area="" asp-controller="Default" asp-action="Index" class="btn btn-outline-primary">Sitede Gör</a></td>
+                                    <td><a asp-area="Admin" asp-controller="Products" asp-action="UpdateProduct" asp-route-id="@product.ProductId" class="btn btn-outline-warning">Güncelle</a></td>
+                                    <td><a asp-area="Admin" asp-controller="Products" asp-action="DeleteProduct" asp-route-id="@product.ProductId" class="btn btn-outline-danger">Sil</a></td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    <a asp-controller="Products" asp-action="CreateProduct" class="btn btn-outline-success">Yeni Ürün</a>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="CreateProduct" class="btn btn-outline-success">Yeni Ürün</a>
                 </div>
             </div>
         </div>
