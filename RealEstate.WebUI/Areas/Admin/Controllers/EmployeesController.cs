@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using RealEstate.WebUI.Dtos.CategoryDtos;
 using RealEstate.WebUI.Dtos.EmployeeDtos;
 using System.Text;
 
