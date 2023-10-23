@@ -21,8 +21,8 @@ public class CategoriesController : Controller
         if (responseMessage.IsSuccessStatusCode)
         {
             string jsonData = await responseMessage.Content.ReadAsStringAsync();
-            List<ResultCategoryDto> values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
-            return View(values);
+            List<ResultCategoryDto> categories = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
+            return View(categories);
         }
         return View();
     }
@@ -62,8 +62,8 @@ public class CategoriesController : Controller
         if (responseMessage.IsSuccessStatusCode)
         {
             string jsonData = await responseMessage.Content.ReadAsStringAsync();
-            UpdateCategoryDto values = JsonConvert.DeserializeObject<UpdateCategoryDto>(jsonData);
-            return View(values);
+            UpdateCategoryDto category = JsonConvert.DeserializeObject<UpdateCategoryDto>(jsonData);
+            return View(category);
         }
         return View();
     }

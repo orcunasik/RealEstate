@@ -22,8 +22,8 @@ public class ProductsController : Controller
         if (responseMessage.IsSuccessStatusCode)
         {
             string jsonData = await responseMessage.Content.ReadAsStringAsync();
-            List<ResultProductDto> values = JsonConvert.DeserializeObject<List<ResultProductDto>>(jsonData);
-            return View(values);
+            List<ResultProductDto> products = JsonConvert.DeserializeObject<List<ResultProductDto>>(jsonData);
+            return View(products);
         }
         return View();
     }
@@ -34,9 +34,9 @@ public class ProductsController : Controller
         HttpClient client = _httpClientFactory.CreateClient();
         HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7201/api/Categories/");
         string jsonData = await responseMessage.Content.ReadAsStringAsync();
-        List<ResultCategoryDto> values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
+        List<ResultCategoryDto> categories = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
 
-        List<SelectListItem> categoryDatas = (from c in values.ToList()
+        List<SelectListItem> categoryDatas = (from c in categories.ToList()
                                               select new SelectListItem
                                               {
                                                   Text = c.CategoryName,
