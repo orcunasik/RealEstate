@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RealEstate.WebUI.Areas.Admin.Controllers;
 
@@ -37,7 +38,7 @@ public class StatisticsController : Controller
         #region AvgProductPriceByRent
         HttpResponseMessage responseMessage4 = await client.GetAsync("https://localhost:7201/api/Statistics/AvgProductPriceByRent");
         string jsonData4 = await responseMessage4.Content.ReadAsStringAsync();
-        ViewBag.AvgProductPriceByRent = jsonData4;
+        ViewBag.AvgProductPriceByRent = jsonData4.Substring(0, jsonData4.IndexOf('.') + 3).FormatWith("{0:C2}");
         #endregion
 
         #region AvgProductPriceBySale
