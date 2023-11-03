@@ -1,0 +1,38 @@
+﻿@model List<ResultServiceDto>
+
+@{
+    ViewData["Title"] = "Hizmetler";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Hizmetlerimiz</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Hizmet Adı</th>
+                        <th scope="col">Durumu</th>
+                        <th scope="col" colspan="2">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ResultServiceDto service in Model)
+                    {
+                        <tr>
+                            <th scope="row">@service.ServiceId</th>
+                            <td>@service.ServiceName</td>
+                            <td>@service.ServiceStatus</td>
+                            <td><a asp-area="Admin" asp-controller="Service" asp-action="UpdateService" asp-route-id="@service.ServiceId" class="btn btn-outline-primary">Güncelle</a></td>
+                            <td><a asp-area="Admin" asp-controller="Service" asp-action="DeleteService" asp-route-id="@service.ServiceId" class="btn btn-outline-danger">Sil</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-area="Admin" asp-controller="Service" asp-action="CreateService" class="btn btn-outline-info">Yeni Hizmet</a>
+        </div>
+    </div>
+</div>
+
