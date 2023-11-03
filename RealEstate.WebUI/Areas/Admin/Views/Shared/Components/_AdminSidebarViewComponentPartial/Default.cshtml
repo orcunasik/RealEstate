@@ -15,17 +15,17 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="~/adminUI/index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+            <a asp-area="Admin" asp-controller="Statistics" asp-action="Index" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
 
             <a asp-area="" asp-controller="Default" asp-action="Index" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Siteye Git</a>
             <a asp-area="Admin" asp-controller="Categories" asp-action="Index" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Kategoriler</a>
             <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>İlanlar</a>
             <a asp-area="Admin" asp-controller="Employees" asp-action="Index" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Personeller</a>
             <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Grafikler</a>
-            <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>İstatiskler</a>
+            <a asp-area="Admin" asp-controller="Statistics" asp-action="Index" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>İstatiskler</a>
             <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Apiler</a>
-            <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Biz Kimiz</a>
-            <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Hizmetler</a>
+            <a asp-area="Admin" asp-controller="WhoWeAre" asp-action="Index" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Biz Kimiz</a>
+            <a asp-area="Admin" asp-controller="Service" asp-action="Index" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Hizmetler</a>
             <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Lokasyonlar</a>
             <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Referanslar</a>
             <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Günün Fırsatları</a>
@@ -34,7 +34,7 @@
             <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Gelen Mesajlar</a>
             <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Ayarlar</a>
             <a href="~/adminUI/chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Çıkış Yap</a>
-        
+
         </div>
     </nav>
 </div>
