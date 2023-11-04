@@ -361,5 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/RealEstate.Api/appsettings.json
-/RealEstate.Api/Properties/launchSettings.json
