@@ -1,29 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using RealEstate.WebUI.ApiClients.Concretes;
 using RealEstate.WebUI.Dtos.CategoryDtos;
-using System.Text;
 
 namespace RealEstate.WebUI.Areas.Admin.Controllers;
 
 [Area("Admin")]
 public class CategoriesController : Controller
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly CategoryApiClient _apiClient;
 
-    public CategoriesController(IHttpClientFactory httpClientFactory)
+    public CategoriesController(CategoryApiClient categoryApiClient)
     {
-        _httpClientFactory = httpClientFactory;
+        _apiClient = categoryApiClient;
     }
     public async Task<IActionResult> Index()
     {
-        HttpClient client = _httpClientFactory.CreateClient();
-        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7201/api/Categories/");
-        if (responseMessage.IsSuccessStatusCode)
-        {
-            string jsonData = await responseMessage.Content.ReadAsStringAsync();
-            List<ResultCategoryDto> categories = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
+        List<ResultCategoryDto> categories = await _apiClient.GetAllAsync();
+        if (categories is not null)
             return View(categories);
-        }
         return View();
     }
 
@@ -36,47 +30,33 @@ public class CategoriesController : Controller
     [HttpPost]
     public async Task<IActionResult> CreateCategory(CreateCategoryDto categoryDto)
     {
-        HttpClient client = _httpClientFactory.CreateClient();
-        string jsonData = JsonConvert.SerializeObject(categoryDto);
-        StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        HttpResponseMessage responseMessage = await client.PostAsync("https://localhost:7201/api/Categories/", stringContent);
-        if (responseMessage.IsSuccessStatusCode)
-            return RedirectToAction("Index");
-        return View();
+        await _apiClient.AddAsync(categoryDto);
+        return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> DeleteCategory(int id)
     {
-        HttpClient client = _httpClientFactory.CreateClient();
-        HttpResponseMessage responseMessage = await client.DeleteAsync($"https://localhost:7201/api/Categories/{id}");
-        if (responseMessage.IsSuccessStatusCode)
-            return RedirectToAction("Index");
+        bool isSuccess = await _apiClient.DeleteAsync(id);
+        if (isSuccess)
+            return RedirectToAction(nameof(Index));
         return View();
     }
 
     [HttpGet]
     public async Task<IActionResult> UpdateCategory(int id)
     {
-        HttpClient client = _httpClientFactory.CreateClient();
-        HttpResponseMessage responseMessage = await client.GetAsync($"https://localhost:7201/api/Categories/{id}");
-        if (responseMessage.IsSuccessStatusCode)
-        {
-            string jsonData = await responseMessage.Content.ReadAsStringAsync();
-            UpdateCategoryDto category = JsonConvert.DeserializeObject<UpdateCategoryDto>(jsonData);
+        UpdateCategoryDto category = await _apiClient.GetUpdateAsync(id);
+        if (category is not null)
             return View(category);
-        }
         return View();
     }
 
     [HttpPost]
     public async Task<IActionResult> UpdateCategory(UpdateCategoryDto categoryDto)
     {
-        HttpClient client = _httpClientFactory.CreateClient();
-        string jsonData = JsonConvert.SerializeObject(categoryDto);
-        StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-        HttpResponseMessage responseMessage = await client.PutAsync("https://localhost:7201/api/Categories/", stringContent);
-        if (responseMessage.IsSuccessStatusCode)
-            return RedirectToAction("Index");
+        bool isSuccess = await _apiClient.UpdateAsync(categoryDto);
+        if (isSuccess)
+            return RedirectToAction(nameof(Index));
         return View();
     }
 }

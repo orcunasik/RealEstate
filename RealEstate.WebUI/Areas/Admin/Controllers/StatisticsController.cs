@@ -1,116 +1,98 @@
-﻿using Humanizer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using RealEstate.WebUI.ApiClients.Abstracts;
 
 namespace RealEstate.WebUI.Areas.Admin.Controllers;
 
 [Area("Admin")]
 public class StatisticsController : Controller
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IStatisticsApiClient _apiClient;
 
-    public StatisticsController(IHttpClientFactory httpClientFactory)
+    public StatisticsController(IStatisticsApiClient statisticsApiClient)
     {
-        _httpClientFactory = httpClientFactory;
+        _apiClient = statisticsApiClient;
     }
 
     public async Task<IActionResult> Index()
     {
-        HttpClient client = _httpClientFactory.CreateClient();
-
         #region ActiveCategoryCount
-        HttpResponseMessage responseMessage1 = await client.GetAsync("https://localhost:7201/api/Statistics/ActiveCategoryCount");
-        string jsonData1 = await responseMessage1.Content.ReadAsStringAsync();
-        ViewBag.ActiveCategoryCount = jsonData1;
+        int activeCategoryCount = await _apiClient.GetActiveCategoryCountAsync();
+        ViewBag.ActiveCategoryCount = activeCategoryCount;
         #endregion
 
         #region ActiveEmployeeCount
-        HttpResponseMessage responseMessage2 = await client.GetAsync("https://localhost:7201/api/Statistics/ActiveEmployeeCount");
-        string jsonData2 = await responseMessage2.Content.ReadAsStringAsync();
-        ViewBag.ActiveEmployeeCount = jsonData2;
+        int activeEmployeeCount = await _apiClient.GetActiveEmployeeCountAsync();
+        ViewBag.ActiveEmployeeCount = activeEmployeeCount;
         #endregion
 
         #region ApartmentCount
-        HttpResponseMessage responseMessage3 = await client.GetAsync("https://localhost:7201/api/Statistics/ApartmentCount");
-        string jsonData3 = await responseMessage3.Content.ReadAsStringAsync();
-        ViewBag.ApartmentCount = jsonData3;
+        int apartmentCount = await _apiClient.GetApartmentCountAsync();
+        ViewBag.ApartmentCount = apartmentCount;
         #endregion
 
         #region AvgProductPriceByRent
-        HttpResponseMessage responseMessage4 = await client.GetAsync("https://localhost:7201/api/Statistics/AvgProductPriceByRent");
-        string jsonData4 = await responseMessage4.Content.ReadAsStringAsync();
-        ViewBag.AvgProductPriceByRent = jsonData4.Substring(0, jsonData4.IndexOf('.') + 3).FormatWith("{0:C2}");
+        decimal avgProductPriceByRent = await _apiClient.GetAvgProductPriceByRentAsync();
+        ViewBag.AvgProductPriceByRent = avgProductPriceByRent;
         #endregion
 
         #region AvgProductPriceBySale
-        HttpResponseMessage responseMessage5 = await client.GetAsync("https://localhost:7201/api/Statistics/AvgProductPriceBySale");
-        string jsonData5 = await responseMessage5.Content.ReadAsStringAsync();
-        ViewBag.AvgProductPriceBySale = jsonData5;
+        decimal avgProductPriceBySale = await _apiClient.GetAvgProductPriceBySaleAsync();
+        ViewBag.AvgProductPriceBySale = avgProductPriceBySale;
         #endregion
 
         #region AvgRoomCount
-        HttpResponseMessage responseMessage6 = await client.GetAsync("https://localhost:7201/api/Statistics/AvgRoomCount");
-        string jsonData6 = await responseMessage6.Content.ReadAsStringAsync();
-        ViewBag.AvgRoomCount = jsonData6;
+        int avgRoomCount = await _apiClient.GetAvgRoomCountAsync();
+        ViewBag.AvgRoomCount = avgRoomCount;
         #endregion
 
         #region CategoryCount
-        HttpResponseMessage responseMessage7 = await client.GetAsync("https://localhost:7201/api/Statistics/CategoryCount");
-        string jsonData7 = await responseMessage7.Content.ReadAsStringAsync();
-        ViewBag.CategoryCount = jsonData7;
+        int categoryCount = await _apiClient.GetCategoryCountAsync();
+        ViewBag.CategoryCount = categoryCount;
         #endregion
 
         #region CategoryNameByMaxProductCount
-        HttpResponseMessage responseMessage8 = await client.GetAsync("https://localhost:7201/api/Statistics/CategoryNameByMaxProductCount");
-        string jsonData8 = await responseMessage8.Content.ReadAsStringAsync();
-        ViewBag.CategoryNameByMaxProductCount = jsonData8;
+        string categoryNameByMaxProductCount = await _apiClient.GetCategoryNameByMaxProductCountAsync();
+        ViewBag.CategoryNameByMaxProductCount = categoryNameByMaxProductCount;
         #endregion
 
         #region CityNameByMaxProductCount
-        HttpResponseMessage responseMessage9 = await client.GetAsync("https://localhost:7201/api/Statistics/CityNameByMaxProductCount");
-        string jsonData9 = await responseMessage9.Content.ReadAsStringAsync();
-        ViewBag.CityNameByMaxProductCount = jsonData9;
+        string cityNameByMaxProdcutCount = await _apiClient.GetCityNameByMaxProductCountAsync();
+        ViewBag.CityNameByMaxProductCount = cityNameByMaxProdcutCount;
         #endregion
 
         #region DifferentCityCount
-        HttpResponseMessage responseMessage10 = await client.GetAsync("https://localhost:7201/api/Statistics/DifferentCityCount");
-        string jsonData10 = await responseMessage10.Content.ReadAsStringAsync();
-        ViewBag.DifferentCityCount = jsonData10;
+        int differentCount = await _apiClient.GetDifferentCountAsync();
+        ViewBag.DifferentCityCount = differentCount;
         #endregion
 
         #region EmployeeNameByMaxProductCount
-        HttpResponseMessage responseMessage11 = await client.GetAsync("https://localhost:7201/api/Statistics/EmployeeNameByMaxProductCount");
-        string jsonData11 = await responseMessage11.Content.ReadAsStringAsync();
-        ViewBag.EmployeeNameByMaxProductCount = jsonData11;
+        string employeeNameByMaxProductCount = await _apiClient.GetEmployeeNameByMaxProductCountAsync();
+        ViewBag.EmployeeNameByMaxProductCount = employeeNameByMaxProductCount;
         #endregion
 
         #region LastProductPrice
-        HttpResponseMessage responseMessage12 = await client.GetAsync("https://localhost:7201/api/Statistics/LastProductPrice");
-        string jsonData12 = await responseMessage12.Content.ReadAsStringAsync();
-        ViewBag.LastProductPrice = jsonData12;
+        decimal lastProductPrice = await _apiClient.GetLastProdcutPriceAsync();
+        ViewBag.LastProductPrice = lastProductPrice;
         #endregion
 
         #region NewestBuildingYear
-        HttpResponseMessage responseMessage13 = await client.GetAsync("https://localhost:7201/api/Statistics/NewestBuildingYear");
-        string jsonData13 = await responseMessage13.Content.ReadAsStringAsync();
-        ViewBag.NewestBuildingYear = jsonData13;
+        string newestBuildingYear = await _apiClient.GetNewestBuildingYearAsync();
+        ViewBag.NewestBuildingYear = newestBuildingYear;
         #endregion
 
         #region OldestBuildingYear
-        HttpResponseMessage responseMessage14 = await client.GetAsync("https://localhost:7201/api/Statistics/OldestBuildingYear");
-        string jsonData14 = await responseMessage14.Content.ReadAsStringAsync();
-        ViewBag.OldestBuildingYear = jsonData14;
+        string oldestBuildingYear = await _apiClient.GetOldestBuildingYearAsync();
+        ViewBag.OldestBuildingYear = oldestBuildingYear;
         #endregion
 
         #region PassiveCategoryCount
-        HttpResponseMessage responseMessage15 = await client.GetAsync("https://localhost:7201/api/Statistics/PassiveCategoryCount");
-        string jsonData15 = await responseMessage15.Content.ReadAsStringAsync();
-        ViewBag.PassiveCategoryCount = jsonData15;
+        int passiveCategoryCount = await _apiClient.GetPassiveCategoryCountAsync();
+        ViewBag.PassiveCategoryCount = passiveCategoryCount;
         #endregion
 
         #region ProductCount
-        HttpResponseMessage responseMessage16 = await client.GetAsync("https://localhost:7201/api/Statistics/ProductCount");
-        string jsonData16 = await responseMessage16.Content.ReadAsStringAsync();
-        ViewBag.ProductCount = jsonData16;
+        int productCount = await _apiClient.GetProductCountAsync();
+        ViewBag.ProductCount = productCount;
         #endregion
 
         return View();
