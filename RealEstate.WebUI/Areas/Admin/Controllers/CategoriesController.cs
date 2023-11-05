@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RealEstate.WebUI.ApiClients.Concretes;
+using RealEstate.WebUI.ApiClients.Abstracts;
 using RealEstate.WebUI.Dtos.CategoryDtos;
 
 namespace RealEstate.WebUI.Areas.Admin.Controllers;
@@ -7,9 +7,9 @@ namespace RealEstate.WebUI.Areas.Admin.Controllers;
 [Area("Admin")]
 public class CategoriesController : Controller
 {
-    private readonly CategoryApiClient _apiClient;
+    private readonly ICategoryApiClient _apiClient;
 
-    public CategoriesController(CategoryApiClient categoryApiClient)
+    public CategoriesController(ICategoryApiClient categoryApiClient)
     {
         _apiClient = categoryApiClient;
     }

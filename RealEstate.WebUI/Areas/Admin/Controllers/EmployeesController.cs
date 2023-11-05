@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RealEstate.WebUI.ApiClients.Concretes;
+using RealEstate.WebUI.ApiClients.Abstracts;
 using RealEstate.WebUI.Dtos.EmployeeDtos;
 
 namespace RealEstate.WebUI.Areas.Admin.Controllers;
@@ -7,9 +7,9 @@ namespace RealEstate.WebUI.Areas.Admin.Controllers;
 [Area("Admin")]
 public class EmployeesController : Controller
 {
-    private readonly EmployeeApiClient _apiClient;
+    private readonly IEmployeeApiClient _apiClient;
 
-    public EmployeesController(EmployeeApiClient employeeApiClient)
+    public EmployeesController(IEmployeeApiClient employeeApiClient)
     {
         _apiClient = employeeApiClient;
     }
