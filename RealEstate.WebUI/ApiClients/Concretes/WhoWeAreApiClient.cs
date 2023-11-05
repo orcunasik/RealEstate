@@ -47,7 +47,7 @@ public class WhoWeAreApiClient : IWhoWeAreApiClient
     public async Task<bool> UpdateAsync(UpdateWhoWeAreDetailDto weAreDetailDto)
     {
         HttpClient client = _httpClient.CreateClient();
-        HttpResponseMessage response = await client.PutAsJsonAsync(_domainService.Domain() + $"api/WhoWeAreDetails/{weAreDetailDto.WhoWeAreDetailId}", weAreDetailDto);
+        HttpResponseMessage response = await client.PutAsJsonAsync(_domainService.Domain() + "api/WhoWeAreDetails/", weAreDetailDto);
         return response.IsSuccessStatusCode;
     }
 }

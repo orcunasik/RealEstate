@@ -46,7 +46,7 @@ public class ServiceApiClient : IServiceApiClient
     public async Task<bool> UpdateAsync(UpdateServiceDto serviceDto)
     {
         HttpClient client = _httpClient.CreateClient();
-        HttpResponseMessage response = await client.PutAsJsonAsync(_domainService.Domain() + $"api/Services/{serviceDto.ServiceId}", serviceDto);
+        HttpResponseMessage response = await client.PutAsJsonAsync(_domainService.Domain() + "api/Services/", serviceDto);
         return response.IsSuccessStatusCode;
     }
 }

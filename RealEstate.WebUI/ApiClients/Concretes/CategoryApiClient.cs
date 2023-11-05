@@ -47,7 +47,7 @@ public class CategoryApiClient : ICategoryApiClient
     public async Task<bool> UpdateAsync(UpdateCategoryDto categoryDto)
     {
         HttpClient client = _httpClient.CreateClient();
-        HttpResponseMessage response = await client.PutAsJsonAsync(_domainService.Domain() + $"api/Categories/{categoryDto.CategoryId}", categoryDto);
+        HttpResponseMessage response = await client.PutAsJsonAsync(_domainService.Domain() + "api/Categories/", categoryDto);
         return response.IsSuccessStatusCode;
     }
 }
