@@ -48,7 +48,7 @@ public class EmployeeApiClient : IEmployeeApiClient
     public async Task<bool> UpdateAsync(UpdateEmployeeDto employeeDto)
     {
         HttpClient client = _httpClient.CreateClient();
-        HttpResponseMessage response = await client.PutAsJsonAsync(_domainService.Domain() + $"api/Employees/{employeeDto.EmployeeId}", employeeDto);
+        HttpResponseMessage response = await client.PutAsJsonAsync(_domainService.Domain() + "api/Employees/", employeeDto);
         return response.IsSuccessStatusCode;
     }
 }
