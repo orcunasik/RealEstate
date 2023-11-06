@@ -8,5 +8,5 @@ public interface IEmployeeApiClient
     Task<UpdateEmployeeDto> GetUpdateAsync(int id);
     Task<CreateEmployeeDto> AddAsync(CreateEmployeeDto employeeDto);
     Task<bool> UpdateAsync(UpdateEmployeeDto employeeDto);
-    Task<bool> DeleteAsync(int id);
+    void Delete(int id);
 }
