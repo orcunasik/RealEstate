@@ -30,10 +30,10 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateCategory(CreateCategoryDto categoryDto)
+    public async Task<IActionResult> CreateCategory(CreateCategoryDto categoryDto)
     {
-        _categoryRepository.CreateCategory(categoryDto);
-        return Ok("Kategori Başarılı Bir Şekilde Eklendi!");
+        CreateCategoryDto category = await _categoryRepository.CreateCategoryAsync(categoryDto);
+        return Ok(category);
     }
 
     [HttpDelete("{id}")]

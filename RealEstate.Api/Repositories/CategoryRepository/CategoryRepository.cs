@@ -13,15 +13,18 @@ public class CategoryRepository : ICategoryRepository
         _context = context;
     }
 
-    public async void CreateCategory(CreateCategoryDto categoryDto)
+    public async Task<CreateCategoryDto> CreateCategoryAsync(CreateCategoryDto categoryDto)
     {
-        string query = "Insert into Categories (CategoryName,Status) values (@categoryName,@status)";
-        var parameters = new DynamicParameters();
+        string insertQuery = "Insert into Categories (CategoryName,Status) values (@categoryName,@status);SELECT SCOPE_IDENTITY()";
+        DynamicParameters parameters = new();
         parameters.Add("@categoryName", categoryDto.CategoryName);
         parameters.Add("@status", true);
         using (var connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(query, parameters);
+            int categoryId = await connection.QuerySingleAsync<int>(insertQuery, parameters);
+            string selectQuery = "Select * From Categories Where CategoryId = @categoryId";
+            CreateCategoryDto category = await connection.QuerySingleOrDefaultAsync<CreateCategoryDto>(selectQuery, new { categoryId });
+            return category;
         }
     }
 
