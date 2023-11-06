@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using RealEstate.Api.Dtos.CategoryDtos;
 using RealEstate.Api.Dtos.EmployeeDtos;
 using RealEstate.Api.Models.DapperContext;
 
@@ -13,10 +12,10 @@ public class EmployeeRepository : IEmployeeRepository
     {
         _context = context;
     }
-    public async void CreateEmployee(CreateEmployeeDto employeeDto)
+    public async Task<CreateEmployeeDto> CreateEmployeeAsync(CreateEmployeeDto employeeDto)
     {
-        string query = "Insert into Employees (Name,Title,Email,PhoneNumber,ImageUrl,Status) values (@name,@title,@email,@phoneNumber,@imageUrl,@status)";
-        var parameters = new DynamicParameters();
+        string insertQuery = "Insert into Employees (Name,Title,Email,PhoneNumber,ImageUrl,Status) values (@name,@title,@email,@phoneNumber,@imageUrl,@status);SELECT SCOPE_IDENTITY()";
+        DynamicParameters parameters = new();
         parameters.Add("@name", employeeDto.Name);
         parameters.Add("@title", employeeDto.Title);
         parameters.Add("@email", employeeDto.Email);
@@ -25,18 +24,44 @@ public class EmployeeRepository : IEmployeeRepository
         parameters.Add("@status", true);
         using (var connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(query, parameters);
+            int employeeId = await connection.QuerySingleAsync<int>(insertQuery, parameters);
+            string selectQuery = "Select * From Employess Where EmployeeId = @employeeId";
+            CreateEmployeeDto employee = await connection.QuerySingleOrDefaultAsync<CreateEmployeeDto>(selectQuery, new { employeeId });
+            return employee;
         }
     }
 
-    public async void DeleteEmployee(int id)
+    public async Task DeleteEmployeeAsync(int id)
     {
-        string query = "Delete From Employees Where EmployeeId = @employeeId";
-        var parameters = new DynamicParameters();
-        parameters.Add("@employeeId", id);
         using (var connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(query, parameters);
+            using (var transaction = connection.BeginTransaction())
+            {
+                try
+                {
+                    string deleteProductDetailQuery = "DELETE FROM ProductDetail WHERE ProductId IN (SELECT ProductId FROM Products WHERE EmployeeId = @employeeId)";
+                    DynamicParameters productDetailParameters = new();
+                    productDetailParameters.Add("@employeeId", id);
+                    await connection.ExecuteAsync(deleteProductDetailQuery, productDetailParameters, transaction);
+
+                    string deleteProductsQuery = "DELETE FROM Products WHERE EmployeeId = @employeeId";
+                    DynamicParameters productsParameters = new();
+                    productsParameters.Add("@employeeId", id);
+                    await connection.ExecuteAsync(deleteProductsQuery, productsParameters, transaction);
+
+                    string deleteEmployeeQuery = "DELETE FROM Employees WHERE EmployeeId = @employeeId";
+                    DynamicParameters employeeParameters = new();
+                    employeeParameters.Add("@employeeId", id);
+                    await connection.ExecuteAsync(deleteEmployeeQuery, employeeParameters, transaction);
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw new Exception("Employee silme işlemi başarısız oldu.");
+                }
+            }
         }
     }
 
@@ -65,7 +90,7 @@ public class EmployeeRepository : IEmployeeRepository
     public async void UpdateEmployee(UpdateEmployeeDto employeeDto)
     {
         string query = "Update Employees Set Name = @name,Title = @title, Email = @email, PhoneNumber = @phoneNumber, ImageUrl = @imageUrl, Status = @status Where EmployeeId = @employeeId";
-        var parameters = new DynamicParameters();
+        DynamicParameters parameters = new();
         parameters.Add("@employeeId", employeeDto.EmployeeId);
         parameters.Add("@name", employeeDto.Name);
         parameters.Add("@title", employeeDto.Title);

@@ -30,16 +30,16 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateEmployee(CreateEmployeeDto employeeDto)
+    public async Task<IActionResult> CreateEmployee(CreateEmployeeDto employeeDto)
     {
-        _employeeRepository.CreateEmployee(employeeDto);
-        return Ok("Personel Başarılı Bir Şekilde Eklendi!");
+        CreateEmployeeDto employee = await _employeeRepository.CreateEmployeeAsync(employeeDto);
+        return Ok(employee);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteEmployee(int id)
+    public async Task<IActionResult> DeleteEmployee(int id)
     {
-        _employeeRepository.DeleteEmployee(id);
+        await _employeeRepository.DeleteEmployeeAsync(id);
         return Ok("Personel Başarılı Bir Şekilde Silindi!");
 
     }
