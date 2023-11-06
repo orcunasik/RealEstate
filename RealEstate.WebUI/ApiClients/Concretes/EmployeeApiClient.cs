@@ -23,12 +23,10 @@ public class EmployeeApiClient : IEmployeeApiClient
         return null;
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async void DeleteAsync(int id)
     {
         HttpClient client = _httpClient.CreateClient();
-        HttpResponseMessage response = await client.DeleteAsync(_domainService.Domain() + $"api/Employees/{id}");
-
-        return response.IsSuccessStatusCode;
+        await client.DeleteAsync(_domainService.Domain() + $"api/Employees/{id}");
     }
 
     public async Task<List<ResultEmployeeDto>> GetAllAsync()

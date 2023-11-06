@@ -34,12 +34,10 @@ public class EmployeesController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    public async Task<IActionResult> DeleteEmployee(int id)
+    public IActionResult DeleteEmployee(int id)
     {
-        bool isSuccess = await _apiClient.DeleteAsync(id);
-        if (isSuccess)
-            return RedirectToAction(nameof(Index));
-        return View();
+        _apiClient.Delete(id);
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
