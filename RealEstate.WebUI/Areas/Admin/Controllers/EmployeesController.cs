@@ -43,7 +43,7 @@ public class EmployeesController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> UpdateCategory(int id)
+    public async Task<IActionResult> UpdateEmployee(int id)
     {
         UpdateEmployeeDto employee = await _apiClient.GetUpdateAsync(id);
         if (employee is not null)
@@ -52,7 +52,7 @@ public class EmployeesController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> UpdateCategory(UpdateEmployeeDto employeeDto)
+    public async Task<IActionResult> UpdateEmployee(UpdateEmployeeDto employeeDto)
     {
         bool isSuccess = await _apiClient.UpdateAsync(employeeDto);
         if (isSuccess)
