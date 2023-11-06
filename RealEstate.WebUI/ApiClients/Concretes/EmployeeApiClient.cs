@@ -23,7 +23,7 @@ public class EmployeeApiClient : IEmployeeApiClient
         return null;
     }
 
-    public async void DeleteAsync(int id)
+    public async void Delete(int id)
     {
         HttpClient client = _httpClient.CreateClient();
         await client.DeleteAsync(_domainService.Domain() + $"api/Employees/{id}");
