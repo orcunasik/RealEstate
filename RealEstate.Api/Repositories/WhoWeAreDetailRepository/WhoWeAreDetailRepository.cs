@@ -1,7 +1,7 @@
 ﻿using Dapper;
-using RealEstate.Api.Dtos.CategoryDtos;
 using RealEstate.Api.Dtos.WhoWeAreDetailDtos;
 using RealEstate.Api.Models.DapperContext;
+using System.Data;
 
 namespace RealEstate.Api.Repositories.WhoWeAreDetailRepository;
 
@@ -14,65 +14,80 @@ public class WhoWeAreDetailRepository : IWhoWeAreDetailRepository
         _context = context;
     }
 
-    public async void CreateWhoWeAreDetail(CreateWhoWeAreDetailDto whoWeAreDetailDto)
+    public async Task<CreateWhoWeAreDetailDto> CreateWhoWeAreDetailAsync(CreateWhoWeAreDetailDto whoWeAreDetailDto)
     {
-        string query = "Insert into WhoWeAreDetails (Title,Subtitle,Description1,Description2) values (@title,@subtitle,@description1,@description2)";
-        var parameters = new DynamicParameters();
+        string insertQuery = "Insert into WhoWeAreDetails (Title,Subtitle,Description1,Description2) values (@title,@subtitle,@description1,@description2);SELECT SCOPE_IDENTITY()";
+        DynamicParameters parameters = new();
         parameters.Add("@title", whoWeAreDetailDto.Title);
         parameters.Add("@subtitle", whoWeAreDetailDto.Subtitle);
         parameters.Add("@description1", whoWeAreDetailDto.Description1);
         parameters.Add("@description2", whoWeAreDetailDto.Description2);
-        using (var connection = _context.CreateConnection())
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(query, parameters);
+            int whoWeAreDetailId = await connection.QuerySingleAsync<int>(insertQuery, parameters);
+            string selectQuery = "Select * From WhoWeAreDetails Where WhoWeAreDetailId = @whoWeAreDetailId";
+            CreateWhoWeAreDetailDto whoWeAreDetail = await connection.QuerySingleOrDefaultAsync<CreateWhoWeAreDetailDto>(selectQuery, new { whoWeAreDetailId });
+            return whoWeAreDetail;
         }
     }
 
-    public async void DeleteWhoWeAreDetail(int id)
+    public async void DeleteWhoWeAreDetail(GetByIdWhoWeAreDetailDto whoWeAreDetailDto)
     {
-        string query = "Delete From WhoWeAreDetails Where WhoWeAreDetailId = @whoWeAreDetailId";
-        var parameters = new DynamicParameters();
-        parameters.Add("@whoWeAreDetailId", id);
-        using (var connection = _context.CreateConnection())
+        string deleteQuery = "Delete From WhoWeAreDetails Where WhoWeAreDetailId = @whoWeAreDetailId";
+        DynamicParameters parameter = new();
+        parameter.Add("@whoWeAreDetailId", whoWeAreDetailDto.WhoWeAreDetailId);
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(query, parameters);
+            await connection.ExecuteAsync(deleteQuery, parameter);
         }
     }
 
     public async Task<List<ResultWhoWeAreDetailDto>> GetAllWhoWeAreDetailAsync()
     {
-        string query = "Select * From WhoWeAreDetails";
-        using (var connection = _context.CreateConnection())
+        string listQuery = "Select * From WhoWeAreDetails";
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            var whoWeAreDetails = await connection.QueryAsync<ResultWhoWeAreDetailDto>(query);
+            IEnumerable<ResultWhoWeAreDetailDto> whoWeAreDetails = await connection.QueryAsync<ResultWhoWeAreDetailDto>(listQuery);
             return whoWeAreDetails.ToList();
+        }
+    }
+
+    public GetByIdWhoWeAreDetailDto GetWhoWeAreDetail(int id)
+    {
+        string getByIdQuery = "Select * From WhoWeAreDetails Where WhoWeAreDetailId = @whoWeAreDetailId";
+        DynamicParameters parameter = new();
+        parameter.Add("@whoWeAreDetailId", id);
+        using (IDbConnection connection = _context.CreateConnection())
+        {
+            dynamic whoWeAreDetail = connection.QueryFirstOrDefault<GetByIdWhoWeAreDetailDto>(getByIdQuery, parameter);
+            return whoWeAreDetail;
         }
     }
 
     public async Task<GetByIdWhoWeAreDetailDto> GetWhoWeAreDetailAsync(int id)
     {
-        string query = "Select * From WhoWeAreDetails Where WhoWeAreDetailId = @whoWeAreDetailId";
-        var parameters = new DynamicParameters();
-        parameters.Add("@whoWeAreDetailId", id);
-        using (var connection = _context.CreateConnection())
+        string getByIdQuery = "Select * From WhoWeAreDetails Where WhoWeAreDetailId = @whoWeAreDetailId";
+        DynamicParameters parameter = new();
+        parameter.Add("@whoWeAreDetailId", id);
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            dynamic whoWeAreDetail = await connection.QueryFirstOrDefaultAsync<GetByIdWhoWeAreDetailDto>(query, parameters);
+            dynamic whoWeAreDetail = await connection.QueryFirstOrDefaultAsync<GetByIdWhoWeAreDetailDto>(getByIdQuery, parameter);
             return whoWeAreDetail;
         }
     }
 
     public async void UpdateWhoWeAreDetail(UpdateWhoWeAreDetailDto whoWeAreDetailDto)
     {
-        string query = "Update WhoWeAreDetails Set Title = @title, Subtitle = @subtitle, Description1 = @description1, Description2 = @description2 Where WhoWeAreDetailId = @whoWeAreDetailId";
-        var parameters = new DynamicParameters();
+        string updateQuery = "Update WhoWeAreDetails Set Title = @title, Subtitle = @subtitle, Description1 = @description1, Description2 = @description2 Where WhoWeAreDetailId = @whoWeAreDetailId";
+        DynamicParameters parameters = new();
         parameters.Add("@whoWeAreDetailId", whoWeAreDetailDto.WhoWeAreDetailId);
         parameters.Add("@title", whoWeAreDetailDto.Title);
         parameters.Add("@subtitle", whoWeAreDetailDto.Subtitle);
         parameters.Add("@description1", whoWeAreDetailDto.Description1);
         parameters.Add("@description2", whoWeAreDetailDto.Description2);
-        using (var connection = _context.CreateConnection())
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(query, parameters);
+            await connection.ExecuteAsync(updateQuery, parameters);
         }
     }
 }
