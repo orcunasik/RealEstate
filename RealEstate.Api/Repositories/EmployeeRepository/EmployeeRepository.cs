@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using RealEstate.Api.Dtos.EmployeeDtos;
 using RealEstate.Api.Models.DapperContext;
+using System.Data;
+using System.Transactions;
 
 namespace RealEstate.Api.Repositories.EmployeeRepository;
 
@@ -25,43 +27,21 @@ public class EmployeeRepository : IEmployeeRepository
         using (var connection = _context.CreateConnection())
         {
             int employeeId = await connection.QuerySingleAsync<int>(insertQuery, parameters);
-            string selectQuery = "Select * From Employess Where EmployeeId = @employeeId";
+            string selectQuery = "Select * From Employees Where EmployeeId = @employeeId";
             CreateEmployeeDto employee = await connection.QuerySingleOrDefaultAsync<CreateEmployeeDto>(selectQuery, new { employeeId });
             return employee;
         }
     }
 
-    public async Task DeleteEmployeeAsync(int id)
+    public async void DeleteEmployee(GetByIdEmployeeDto employeeDto)
     {
-        using (var connection = _context.CreateConnection())
+        string deleteEmployeeQuery = "DELETE FROM ProductDetails WHERE ProductId IN (SELECT ProductId FROM Products WHERE EmployeeId = @employeeId); DELETE FROM Products WHERE EmployeeId = @employeeId;DELETE FROM Employees Where EmployeeId = @employeeId";
+        DynamicParameters parameters = new();
+        parameters.Add("@employeeId", employeeDto.EmployeeId);
+        
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            using (var transaction = connection.BeginTransaction())
-            {
-                try
-                {
-                    string deleteProductDetailQuery = "DELETE FROM ProductDetail WHERE ProductId IN (SELECT ProductId FROM Products WHERE EmployeeId = @employeeId)";
-                    DynamicParameters productDetailParameters = new();
-                    productDetailParameters.Add("@employeeId", id);
-                    await connection.ExecuteAsync(deleteProductDetailQuery, productDetailParameters, transaction);
-
-                    string deleteProductsQuery = "DELETE FROM Products WHERE EmployeeId = @employeeId";
-                    DynamicParameters productsParameters = new();
-                    productsParameters.Add("@employeeId", id);
-                    await connection.ExecuteAsync(deleteProductsQuery, productsParameters, transaction);
-
-                    string deleteEmployeeQuery = "DELETE FROM Employees WHERE EmployeeId = @employeeId";
-                    DynamicParameters employeeParameters = new();
-                    employeeParameters.Add("@employeeId", id);
-                    await connection.ExecuteAsync(deleteEmployeeQuery, employeeParameters, transaction);
-
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw new Exception("Employee silme işlemi başarısız oldu.");
-                }
-            }
+            await connection.ExecuteAsync(deleteEmployeeQuery, parameters);
         }
     }
 
@@ -83,6 +63,18 @@ public class EmployeeRepository : IEmployeeRepository
         using (var connection = _context.CreateConnection())
         {
             dynamic employee = await connection.QueryFirstOrDefaultAsync<GetByIdEmployeeDto>(query, parameters);
+            return employee;
+        }
+    }
+
+    public GetByIdEmployeeDto GetEmployee(int id)
+    {
+        string query = "Select * From Employees Where EmployeeId = @employeeId";
+        var parameters = new DynamicParameters();
+        parameters.Add("@employeeId", id);
+        using (var connection = _context.CreateConnection())
+        {
+            dynamic employee = connection.QueryFirstOrDefault<GetByIdEmployeeDto>(query, parameters);
             return employee;
         }
     }
