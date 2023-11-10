@@ -6,7 +6,8 @@ public interface ITestimonialRepository
 {
     Task<List<ResultTestimonialDto>> GetAllTestimonialAsync();
     Task<GetByIdTestimonialDto> GetTestimonialAsync(int id);
-    void CreateTestimonial (CreateTestimonialDto testimonialDto);
+    GetByIdTestimonialDto GetTestimonial(int id);
+    Task<CreateTestimonialDto> CreateTestimonialAsync (CreateTestimonialDto testimonialDto);
     void UpdateTestimonial (UpdateTestimonialDto testimonialDto);
-    void DeleteTestimonial (int id);
+    void DeleteTestimonial (GetByIdTestimonialDto testimonialDto);
 }

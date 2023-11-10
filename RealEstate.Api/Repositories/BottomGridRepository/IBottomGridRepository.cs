@@ -6,7 +6,8 @@ public interface IBottomGridRepository
 {
     Task<List<ResultBottomGridDto>> GetAllBottomGridAsync();
     Task<GetByIdBottomGridDto> GetBottomGridAsync(int id);
-    void CreateBottomGrid(CreateBottomGridDto bottomGridDto);
+    GetByIdBottomGridDto GetBottomGrid(int id);
+    Task<CreateBottomGridDto> CreateBottomGridAsync(CreateBottomGridDto bottomGridDto);
     void UpdateBottomGrid(UpdateBottomGridDto bottomGridDto);
-    void DeleteBottomGrid(int id);
+    void DeleteBottomGrid(GetByIdBottomGridDto bottomGridDto);
 }
