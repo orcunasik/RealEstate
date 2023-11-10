@@ -39,8 +39,8 @@ public class CategoriesController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteCategory(int id)
     {
-        GetByIdCategoryDto categoryDto = _categoryRepository.GetCategory(id);
-        _categoryRepository.DeleteCategory(categoryDto);
+        GetByIdCategoryDto category = _categoryRepository.GetCategory(id);
+        _categoryRepository.DeleteCategory(category);
         return Ok("Kategori Başarılı Bir Şekilde Silindi!");
 
     }
