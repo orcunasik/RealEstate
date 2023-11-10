@@ -18,28 +18,29 @@ public class PopularLocationsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> PopularLocationList()
     {
-        var locations = await _popularLocationRepository.GetAllPopularLocationsAsync();
-        return Ok(locations);
+        List<ResultPopularLocationDto> popularLocations = await _popularLocationRepository.GetAllPopularLocationsAsync();
+        return Ok(popularLocations);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> PopularLocationById(int id)
     {
-        var location = await _popularLocationRepository.GetPopularLocationAsync(id);
-        return Ok(location);
+        GetByIdPopularLocationDto popularLocation = await _popularLocationRepository.GetPopularLocationAsync(id);
+        return Ok(popularLocation);
     }
 
     [HttpPost]
-    public IActionResult CreatePopularLocation(CreatePopularLocationDto popularLocationDto)
+    public async Task<IActionResult> CreatePopularLocation(CreatePopularLocationDto popularLocationDto)
     {
-        _popularLocationRepository.CreatePopularLocation(popularLocationDto);
-        return Ok("Yeni Lokasyon Bilgisi Başarılı Bir Şekilde Kaydedildi!");
+        CreatePopularLocationDto popularLocation = await _popularLocationRepository.CreatePopularLocationAsync(popularLocationDto);
+        return Ok(popularLocation);
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeletePopularLocation(int id)
     {
-        _popularLocationRepository.DeletePopularLocation(id);
+        GetByIdPopularLocationDto popularLocation = _popularLocationRepository.GetPopularLocation(id);
+        _popularLocationRepository.DeletePopularLocation(popularLocation);
         return Ok("Lokasyon Bilgisi Başarılı Bir Şekilde Silindi!");
 
     }

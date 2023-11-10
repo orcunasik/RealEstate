@@ -6,7 +6,8 @@ public interface IPopularLocationRepository
 {
     Task<List<ResultPopularLocationDto>> GetAllPopularLocationsAsync();
     Task<GetByIdPopularLocationDto> GetPopularLocationAsync(int id);
-    void CreatePopularLocation(CreatePopularLocationDto popularLocationDto);
+    GetByIdPopularLocationDto GetPopularLocation(int id);
+    Task<CreatePopularLocationDto> CreatePopularLocationAsync(CreatePopularLocationDto popularLocationDto);
     void UpdatePopularLocation(UpdatePopularLocationDto popularLocationDto);
-    void DeletePopularLocation(int id);
+    void DeletePopularLocation(GetByIdPopularLocationDto popularLocationDto);
 }

@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using RealEstate.Api.Dtos.TestimonialDtos;
 using RealEstate.Api.Models.DapperContext;
+using System.Data;
 
 namespace RealEstate.Api.Repositories.TestimonialRepository;
 
@@ -13,65 +14,80 @@ public class TestimonialRepository : ITestimonialRepository
         _context = context;
     }
 
-    public async void CreateTestimonial(CreateTestimonialDto testimonialDto)
+    public async Task<CreateTestimonialDto> CreateTestimonialAsync(CreateTestimonialDto testimonialDto)
     {
-        string query = "Insert into Testimonials (NameSurname,Title,Comment,Status) values (@nameSurname,@title,@comment,@status)";
-        var parameters = new DynamicParameters();
+        string insertQuery = "Insert into Testimonials (NameSurname,Title,Comment,Status) values (@nameSurname,@title,@comment,@status);SELECT SCOPE_IDENTITY()";
+        DynamicParameters parameters = new();
         parameters.Add("@nameSurname", testimonialDto.NameSurname);
         parameters.Add("@title", testimonialDto.Title);
         parameters.Add("@comment", testimonialDto.Comment);
         parameters.Add("@status", testimonialDto.Status);
-        using (var connection = _context.CreateConnection())
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(query, parameters);
+            int testimonialId = await connection.QuerySingleAsync<int>(insertQuery, parameters);
+            string selectQuery = "Select * From Testimonials Where TestimonialId = @testimonialId";
+            CreateTestimonialDto testimonial = await connection.QuerySingleOrDefaultAsync<CreateTestimonialDto>(selectQuery, new { testimonialId });
+            return testimonial;
         }
     }
 
-    public async void DeleteTestimonial(int id)
+    public async void DeleteTestimonial(GetByIdTestimonialDto testimonialDto)
     {
-        string query = "Delete From Testimonials Where TestimonialId = @testimonialId";
-        var parameters = new DynamicParameters();
-        parameters.Add("@testimonialId", id);
-        using (var connection = _context.CreateConnection())
+        string deleteQuery = "Delete From Testimonials Where TestimonialId = @testimonialId";
+        DynamicParameters parameter = new();
+        parameter.Add("@testimonialId", testimonialDto.TestimonialId);
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(query, parameters);
+            await connection.ExecuteAsync(deleteQuery, parameter);
         }
     }
 
     public async Task<List<ResultTestimonialDto>> GetAllTestimonialAsync()
     {
-        string query = "Select * From Testimonials";
-        using (var connection = _context.CreateConnection())
+        string listQuery = "Select * From Testimonials";
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            var testimonials = await connection.QueryAsync<ResultTestimonialDto>(query);
+            IEnumerable<ResultTestimonialDto> testimonials = await connection.QueryAsync<ResultTestimonialDto>(listQuery);
             return testimonials.ToList();
+        }
+    }
+
+    public GetByIdTestimonialDto GetTestimonial(int id)
+    {
+        string getByIdQuery = "Select * From Testimonials Where TestimonialId = @testimonialId";
+        DynamicParameters parameter = new();
+        parameter.Add("@testimonialId", id);
+        using (IDbConnection connection = _context.CreateConnection())
+        {
+            dynamic testimonial = connection.QueryFirstOrDefault<GetByIdTestimonialDto>(getByIdQuery, parameter);
+            return testimonial;
         }
     }
 
     public async Task<GetByIdTestimonialDto> GetTestimonialAsync(int id)
     {
-        string query = "Select * From Testimonials Where TestimonialId = @testimonialId";
-        var parameters = new DynamicParameters();
-        parameters.Add("@testimonialId", id);
-        using (var connection = _context.CreateConnection())
+        string getByIdQuery = "Select * From Testimonials Where TestimonialId = @testimonialId";
+        DynamicParameters parameter = new();
+        parameter.Add("@testimonialId", id);
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            dynamic testimonial = await connection.QueryFirstOrDefaultAsync<GetByIdTestimonialDto>(query, parameters);
+            dynamic testimonial = await connection.QueryFirstOrDefaultAsync<GetByIdTestimonialDto>(getByIdQuery, parameter);
             return testimonial;
         }
     }
 
     public async void UpdateTestimonial(UpdateTestimonialDto testimonialDto)
     {
-        string query = "Update Testimonials Set NameSurname = @nameSurname,Title = @title,Comment =@comment, Status = @status Where TestimonialId = @testimonialId";
-        var parameters = new DynamicParameters();
+        string updateQuery = "Update Testimonials Set NameSurname = @nameSurname,Title = @title,Comment =@comment, Status = @status Where TestimonialId = @testimonialId";
+        DynamicParameters parameters = new();
         parameters.Add("@testimonialId", testimonialDto.TestimonialId);
         parameters.Add("@nameSurname", testimonialDto.NameSurname);
         parameters.Add("@title", testimonialDto.Title);
         parameters.Add("@comment", testimonialDto.Comment);
         parameters.Add("@status", testimonialDto.Status);
-        using (var connection = _context.CreateConnection())
+        using (IDbConnection connection = _context.CreateConnection())
         {
-            await connection.ExecuteAsync(query, parameters);
+            await connection.ExecuteAsync(updateQuery, parameters);
         }
     }
 }

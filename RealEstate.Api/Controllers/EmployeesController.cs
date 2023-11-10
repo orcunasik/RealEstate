@@ -18,14 +18,14 @@ public class EmployeesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> EmployeeList()
     {
-        var employees = await _employeeRepository.GetAllEmployeeAsync();
+        List<ResultEmployeeDto> employees = await _employeeRepository.GetAllEmployeeAsync();
         return Ok(employees);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> EmployeeById(int id)
     {
-        var employee = await _employeeRepository.GetEmployeeAsync(id);
+        GetByIdEmployeeDto employee = await _employeeRepository.GetEmployeeAsync(id);
         return Ok(employee);
     }
 

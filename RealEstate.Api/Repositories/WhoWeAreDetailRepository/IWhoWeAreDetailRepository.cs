@@ -5,7 +5,8 @@ public interface IWhoWeAreDetailRepository
 {
     Task<List<ResultWhoWeAreDetailDto>> GetAllWhoWeAreDetailAsync();
     Task<GetByIdWhoWeAreDetailDto> GetWhoWeAreDetailAsync(int id);
-    void CreateWhoWeAreDetail(CreateWhoWeAreDetailDto whoWeAreDetailDto);
-    void DeleteWhoWeAreDetail(int id);
+    GetByIdWhoWeAreDetailDto GetWhoWeAreDetail(int id);
+    Task<CreateWhoWeAreDetailDto> CreateWhoWeAreDetailAsync(CreateWhoWeAreDetailDto whoWeAreDetailDto);
+    void DeleteWhoWeAreDetail(GetByIdWhoWeAreDetailDto whoWeAreDetailDto);
     void UpdateWhoWeAreDetail(UpdateWhoWeAreDetailDto whoWeAreDetailDto);
 }

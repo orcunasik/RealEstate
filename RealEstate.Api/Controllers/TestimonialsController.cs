@@ -18,28 +18,29 @@ public class TestimonialsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> TestimonialList()
     {
-        var testimonials = await _testimonialRepository.GetAllTestimonialAsync();
+        List<ResultTestimonialDto> testimonials = await _testimonialRepository.GetAllTestimonialAsync();
         return Ok(testimonials);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> TestimonialById(int id)
     {
-        var testimonial = await _testimonialRepository.GetTestimonialAsync(id);
+        GetByIdTestimonialDto testimonial = await _testimonialRepository.GetTestimonialAsync(id);
         return Ok(testimonial);
     }
 
     [HttpPost]
-    public IActionResult CreateTestimonial(CreateTestimonialDto testimonialDto)
+    public async Task<IActionResult> CreateTestimonial(CreateTestimonialDto testimonialDto)
     {
-        _testimonialRepository.CreateTestimonial(testimonialDto);
-        return Ok("Referans Başarılı Bir Şekilde Eklendi!");
+        CreateTestimonialDto testimonial = await _testimonialRepository.CreateTestimonialAsync(testimonialDto);
+        return Ok(testimonial);
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteTestimonialy(int id)
     {
-        _testimonialRepository.DeleteTestimonial(id);
+        GetByIdTestimonialDto testimonial = _testimonialRepository.GetTestimonial(id);
+        _testimonialRepository.DeleteTestimonial(testimonial);
         return Ok("Referans Başarılı Bir Şekilde Silindi!");
 
     }

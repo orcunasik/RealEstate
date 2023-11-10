@@ -18,28 +18,29 @@ public class WhoWeAreDetailsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> WhoWeAreDetailList()
     {
-        var whoWeAreDetails = await _whoWeAreDetailRepository.GetAllWhoWeAreDetailAsync();
+        List<ResultWhoWeAreDetailDto> whoWeAreDetails = await _whoWeAreDetailRepository.GetAllWhoWeAreDetailAsync();
         return Ok(whoWeAreDetails);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> WhoWeAreDetailById(int id)
     {
-        var whoWeAreDetail = await _whoWeAreDetailRepository.GetWhoWeAreDetailAsync(id);
+        GetByIdWhoWeAreDetailDto whoWeAreDetail = await _whoWeAreDetailRepository.GetWhoWeAreDetailAsync(id);
         return Ok(whoWeAreDetail);
     }
 
     [HttpPost]
-    public IActionResult CreateWhoWeAreDetail(CreateWhoWeAreDetailDto whoWeAreDetailDto)
+    public async Task<IActionResult> CreateWhoWeAreDetail(CreateWhoWeAreDetailDto whoWeAreDetailDto)
     {
-        _whoWeAreDetailRepository.CreateWhoWeAreDetail(whoWeAreDetailDto);
-        return Ok("Hakkımızda Alanı Başarılı Bir Şekilde Eklendi!");
+        CreateWhoWeAreDetailDto whoWeAreDetail = await _whoWeAreDetailRepository.CreateWhoWeAreDetailAsync(whoWeAreDetailDto);
+        return Ok(whoWeAreDetail);
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteWhoWeAreDetail(int id)
     {
-        _whoWeAreDetailRepository.DeleteWhoWeAreDetail(id);
+        GetByIdWhoWeAreDetailDto whoWeAreDetail = _whoWeAreDetailRepository.GetWhoWeAreDetail(id);
+        _whoWeAreDetailRepository.DeleteWhoWeAreDetail(whoWeAreDetail);
         return Ok("Hakkımızda Alanı Başarılı Bir Şekilde Silindi!");
 
     }
