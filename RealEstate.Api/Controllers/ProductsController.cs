@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Api.Repositories.ProductRepository;
+using RealEstate.Api.Dtos.ProductDtos;
 
 namespace RealEstate.Api.Controllers
 {
@@ -17,15 +18,15 @@ namespace RealEstate.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> ProductList()
         {
-            var products = await _productRepository.GetAllProductAsync();
+            List<ResultProductDto> products = await _productRepository.GetAllProductAsync();
             return Ok(products);
         }
 
         [HttpGet("ProductListWithCategory")]
         public async Task<IActionResult> ProductListWithCategory()
         {
-            var products = await _productRepository.GetAllProductWithCategoryAsync();
-            return Ok(products);
+            List<ResultProductWithCategoryDto> productsWithCategory = await _productRepository.GetAllProductWithCategoryAsync();
+            return Ok(productsWithCategory);
         }
     }
 }
