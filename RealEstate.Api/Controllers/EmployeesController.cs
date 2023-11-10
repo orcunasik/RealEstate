@@ -37,9 +37,10 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteEmployee(int id)
+    public IActionResult DeleteEmployee(int id)
     {
-        await _employeeRepository.DeleteEmployeeAsync(id);
+        GetByIdEmployeeDto employee = _employeeRepository.GetEmployee(id);
+        _employeeRepository.DeleteEmployee(employee);
         return Ok("Personel Başarılı Bir Şekilde Silindi!");
 
     }
