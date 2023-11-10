@@ -18,28 +18,29 @@ public class BottomGridsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> BottomGridList()
     {
-        var bottomGrids = await _bottomGridRepository.GetAllBottomGridAsync();
+        List<ResultBottomGridDto> bottomGrids = await _bottomGridRepository.GetAllBottomGridAsync();
         return Ok(bottomGrids);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> BottomGridById(int id)
     {
-        var bottomGrid = await _bottomGridRepository.GetBottomGridAsync(id);
+        GetByIdBottomGridDto bottomGrid = await _bottomGridRepository.GetBottomGridAsync(id);
         return Ok(bottomGrid);
     }
 
     [HttpPost]
-    public IActionResult CreateBottomGrid(CreateBottomGridDto bottomGridDto)
+    public async Task<IActionResult> CreateBottomGrid(CreateBottomGridDto bottomGridDto)
     {
-        _bottomGridRepository.CreateBottomGrid(bottomGridDto);
-        return Ok("Yeni Hizmet Başarılı Bir Şekilde Eklendi!");
+        CreateBottomGridDto bottomGrid = await _bottomGridRepository.CreateBottomGridAsync(bottomGridDto);
+        return Ok(bottomGrid);
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteBottomGrid(int id)
     {
-        _bottomGridRepository.DeleteBottomGrid(id);
+        GetByIdBottomGridDto bottomGridDto = _bottomGridRepository.GetBottomGrid(id);
+        _bottomGridRepository.DeleteBottomGrid(bottomGridDto);
         return Ok("Hizmet Başarılı Bir Şekilde Silindi!");
 
     }

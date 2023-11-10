@@ -18,28 +18,29 @@ public class ServicesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> ServiceList()
     {
-        var services = await _serviceRepository.GetAllServiceAsync();
+        List<ResultServiceDto> services = await _serviceRepository.GetAllServiceAsync();
         return Ok(services);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> ServiceById(int id)
     {
-        var service = await _serviceRepository.GetServiceAsync(id);
+        GetByIdServiceDto service = await _serviceRepository.GetServiceAsync(id);
         return Ok(service);
     }
 
     [HttpPost]
-    public IActionResult CreateService(CreateServiceDto serviceDto)
+    public async Task<IActionResult> CreateService(CreateServiceDto serviceDto)
     {
-        _serviceRepository.CreateService(serviceDto);
-        return Ok("Yeni Hizmet Başarılı Bir Şekilde Eklendi!");
+        CreateServiceDto service = await _serviceRepository.CreateServiceAsync(serviceDto);
+        return Ok(service);
     }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteService(int id)
     {
-        _serviceRepository.DeleteService(id);
+        GetByIdServiceDto service = _serviceRepository.GetService(id);
+        _serviceRepository.DeleteService(service);
         return Ok("Hizmet Başarılı Bir Şekilde Silindi!");
 
     }
