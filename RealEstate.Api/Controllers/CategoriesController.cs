@@ -18,14 +18,14 @@ public class CategoriesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> CategoryList()
     {
-        var categories = await _categoryRepository.GetAllCategoryAsync();
+        List<ResultCategoryDto> categories = await _categoryRepository.GetAllCategoryAsync();
         return Ok(categories);
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> CategoryById(int id)
     {
-        var category = await _categoryRepository.GetCategoryAsync(id);
+        GetByIdCategoryDto category = await _categoryRepository.GetCategoryAsync(id);
         return Ok(category);
     }
 
@@ -39,7 +39,8 @@ public class CategoriesController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteCategory(int id)
     {
-        _categoryRepository.DeleteCategory(id);
+        GetByIdCategoryDto categoryDto = _categoryRepository.GetCategory(id);
+        _categoryRepository.DeleteCategory(categoryDto);
         return Ok("Kategori Başarılı Bir Şekilde Silindi!");
 
     }
