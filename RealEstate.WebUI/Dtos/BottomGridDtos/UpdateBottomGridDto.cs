@@ -1,6 +1,6 @@
 ﻿namespace RealEstate.WebUI.Dtos.BottomGridDtos;
 
-public class ResultBottomGridDto
+public class UpdateBottomGridDto
 {
     public int BottomGridId { get; set; }
     public string Icon { get; set; }
