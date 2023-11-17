@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using RealEstate.WebUI.ApiClients.Abstracts;
-using RealEstate.WebUI.Dtos.CategoryDtos;
 using RealEstate.WebUI.Dtos.ServiceDtos;
-using System.Text;
 
 namespace RealEstate.WebUI.Areas.Admin.Controllers;
 
