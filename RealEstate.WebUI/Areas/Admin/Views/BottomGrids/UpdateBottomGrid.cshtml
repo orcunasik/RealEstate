@@ -1,0 +1,25 @@
+﻿@model UpdateBottomGridDto
+
+@{
+    ViewData["Title"] = "Kılavuz Güncelle";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Yeni Kılavuz Oluştur</h6>
+        <form method="post">
+            <input type="hidden" asp-for="BottomGridId" />
+            <label asp-for="Icon">İcon</label>
+            <input type="text" asp-for="Icon" class="form-control" />
+            <br />
+            <label asp-for="Title">Başlık</label>
+            <input type="text" asp-for="Title" class="form-control" />
+            <br />
+            <label asp-for="Description">Açıklamalar</label>
+            <textarea style="height: 150px;" asp-for="Description" class="form-control" id="floatingTextarea"></textarea>
+            <br />
+            <button class="btn btn-outline-success">Kaydet</button>
+        </form>
+    </div>
+</div>

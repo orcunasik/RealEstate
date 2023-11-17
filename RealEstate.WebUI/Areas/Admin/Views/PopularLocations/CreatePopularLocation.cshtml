@@ -1,0 +1,21 @@
+﻿@model CreatePopularLocationDto
+
+@{
+    ViewData["Title"] = "Yeni Lokasyon Kaydı";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Yeni Lokasyon Ekle</h6>
+        <form method="post">
+            <label asp-for="CityName">Şehir</label>
+            <input type="text" asp-for="CityName" class="form-control" />
+            <br />
+            <label asp-for="ImageUrl">Görsel</label>
+            <input type="text" asp-for="ImageUrl" class="form-control" />
+            <br />
+            <button class="btn btn-outline-success">Kaydet</button>
+        </form>
+    </div>
+</div>

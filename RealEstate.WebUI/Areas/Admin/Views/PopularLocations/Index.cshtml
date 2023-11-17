@@ -1,0 +1,42 @@
+﻿@model List<ResultPopularLocationDto>
+
+@{
+    ViewData["Title"] = "Popüler Lokasyonlar";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    img{
+        border-radius:50%;
+    }
+</style>
+
+<div class="col-12">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Lokasyonlar</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Şehir</th>
+                        <th scope="col">Görsel</th>
+                        <th scope="col" colspan="2">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ResultPopularLocationDto entity in Model)
+                    {
+                        <tr>
+                            <th scope="row">@entity.LocationId</th>
+                            <td><img src="@entity.ImageUrl" height="50" width="50" /> @entity.CityName</td>
+                            <td><a asp-area="Admin" asp-controller="PopularLocations" asp-action="UpdatePopularLocation" asp-route-id="@entity.LocationId" class="btn btn-outline-primary">Güncelle</a></td>
+                            <td><a asp-area="Admin" asp-controller="PopularLocations" asp-action="DeletePopularLocation" asp-route-id="@entity.LocationId" class="btn btn-outline-danger">Sil</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-area="Admin" asp-controller="PopularLocations" asp-action="CreatePopularLocation" class="btn btn-outline-info">Yeni Lokasyon Oluşur</a>
+        </div>
+    </div>
+</div>
