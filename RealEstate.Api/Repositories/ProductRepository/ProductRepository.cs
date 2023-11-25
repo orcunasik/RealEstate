@@ -32,4 +32,30 @@ public class ProductRepository : IProductRepository
             return products.ToList();
         }
     }
+
+    public async Task ProductDealOfTheDayStatusChangeToFalse(int id)
+    {
+        string updateQuery = "Update Products Set IsDealOfTheDay = @isDealOfTheDay where ProductId = @productId";
+        DynamicParameters parameters = new();
+        parameters.Add("@productId", id);
+        parameters.Add("@isDealOfTheDay", false);
+
+        using (IDbConnection connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(updateQuery, parameters);
+        }
+    }
+
+    public async Task ProductDealOfTheDayStatusChangeToTrue(int id)
+    {
+        string updateQuery = "Update Products Set IsDealOfTheDay = @isDealOfTheDay where ProductId = @productId";
+        DynamicParameters parameters = new();
+        parameters.Add("@productId", id);
+        parameters.Add("@isDealOfTheDay", true);
+
+        using (IDbConnection connection = _context.CreateConnection())
+        {
+            await connection.ExecuteAsync(updateQuery, parameters);
+        }
+    }
 }
