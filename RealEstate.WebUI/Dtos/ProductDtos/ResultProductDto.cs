@@ -11,5 +11,6 @@ public class ResultProductDto
     public string Type { get; set; }
     public string CoverImage { get; set; }
     public string Address { get; set; }
+    public bool IsDealOfTheDay { get; set; }
 
 }
