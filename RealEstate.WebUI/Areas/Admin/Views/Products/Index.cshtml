@@ -36,11 +36,11 @@
                             <td>
                                 @if(product.IsDealOfTheDay is true)
                                 {
-                                    <a href="#" class="btn btn-outline-warning">Pasif Yap</a>
+                                    <a asp-area="Admin" asp-controller="Products" asp-action="ProductDealOfTheDayStatusChangeToFalse" asp-route-id="@product.ProductId" class="btn btn-outline-warning">Pasif Yap</a>
                                 }
                                 else
                                 {
-                                    <a href="#" class="btn btn-outline-info">Aktif Yap</a>
+                                    <a a asp-area="Admin" asp-controller="Products" asp-action="ProductDealOfTheDayStatusChangeToTrue" asp-route-id="@product.ProductId" class="btn btn-outline-info">Aktif Yap</a>
                                 }
                             </td>
                             <td><a asp-area="" asp-controller="Default" asp-action="Index" class="btn btn-outline-primary">Sitede Gör</a></td>
