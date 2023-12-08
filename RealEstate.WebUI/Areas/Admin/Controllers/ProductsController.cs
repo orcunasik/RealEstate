@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using RealEstate.WebUI.ApiClients.Abstracts;
 using RealEstate.WebUI.Dtos.CategoryDtos;
 using RealEstate.WebUI.Dtos.ProductDtos;
 
@@ -9,23 +10,17 @@ namespace RealEstate.WebUI.Areas.Admin.Controllers;
 [Area("Admin")]
 public class ProductsController : Controller
 {
+    private readonly IProductApiClient _apiClient;
     private readonly IHttpClientFactory _httpClientFactory;
-
-    public ProductsController(IHttpClientFactory httpClientFactory)
+    public ProductsController(IProductApiClient apiClient, IHttpClientFactory httpClientFactory)
     {
+        _apiClient = apiClient;
         _httpClientFactory = httpClientFactory;
     }
     public async Task<IActionResult> Index()
     {
-        HttpClient client = _httpClientFactory.CreateClient();
-        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7201/api/Products/ProductListWithCategory");
-        if (responseMessage.IsSuccessStatusCode)
-        {
-            string jsonData = await responseMessage.Content.ReadAsStringAsync();
-            List<ResultProductDto> products = JsonConvert.DeserializeObject<List<ResultProductDto>>(jsonData);
-            return View(products);
-        }
-        return View();
+        List<ResultProductDto> products = await _apiClient.GetAllProductAsync();
+        return View(products);
     }
 
     [HttpGet]
@@ -46,9 +41,27 @@ public class ProductsController : Controller
         return View();
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateProduct(CreateProductDto productDto)
+    //[HttpPost]
+    //public async Task<IActionResult> CreateProduct(CreateProductDto productDto)
+    //{
+    //    return View();
+    //}
+
+    [HttpGet("ProductDealOfTheDayStatusChangeToFalse")]
+    public async Task<IActionResult> ProductDealOfTheDayStatusChangeToFalse(int id)
     {
+        bool result =await _apiClient.ProductDealOfTheDayStatusChangeToFalseAsync(id);
+        if (result)
+            return RedirectToAction(nameof(Index));
+        return View();
+    }
+
+    [HttpGet("ProductDealOfTheDayStatusChangeToTrue")]
+    public async Task<IActionResult> ProductDealOfTheDayStatusChangeToTrue(int id)
+    {
+        bool result = await _apiClient.ProductDealOfTheDayStatusChangeToTrueAsync(id);
+        if(result)
+            return RedirectToAction(nameof(Index));
         return View();
     }
 }
