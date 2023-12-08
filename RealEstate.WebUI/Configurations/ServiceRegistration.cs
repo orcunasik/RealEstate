@@ -12,6 +12,7 @@ public static class ServiceRegistration
         services.AddTransient<IDomainService, DomainService>();
 
         services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+        services.AddTransient<IProductApiClient, ProductApiClient>();
         services.AddTransient<IEmployeeApiClient, EmployeeApiClient>();
         services.AddTransient<IServiceApiClient, ServiceApiClient>();
         services.AddTransient<IWhoWeAreApiClient, WhoWeAreApiClient>();
