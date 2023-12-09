@@ -33,7 +33,7 @@ public class ProductRepository : IProductRepository
         }
     }
 
-    public async Task ProductDealOfTheDayStatusChangeToFalse(int id)
+    public async Task ProductDealOfTheDayStatusChangeToFalseAsync(int id)
     {
         string updateQuery = "Update Products Set IsDealOfTheDay = @isDealOfTheDay where ProductId = @productId";
         DynamicParameters parameters = new();
@@ -46,7 +46,7 @@ public class ProductRepository : IProductRepository
         }
     }
 
-    public async Task ProductDealOfTheDayStatusChangeToTrue(int id)
+    public async Task ProductDealOfTheDayStatusChangeToTrueAsync(int id)
     {
         string updateQuery = "Update Products Set IsDealOfTheDay = @isDealOfTheDay where ProductId = @productId";
         DynamicParameters parameters = new();
