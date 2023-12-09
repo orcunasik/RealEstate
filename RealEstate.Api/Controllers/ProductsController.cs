@@ -32,14 +32,14 @@ public class ProductsController : ControllerBase
     [HttpPatch("ProductDealOfTheDayStatusTrue/{id}")]
     public async Task<IActionResult> ProductDealOfTheDayStatusTrue(int id)
     {
-        await _productRepository.ProductDealOfTheDayStatusChangeToTrue(id);
+        await _productRepository.ProductDealOfTheDayStatusChangeToTrueAsync(id);
         return Ok("İlanın Durumu Aktif olarak güncellendi!");
     }
 
     [HttpPatch("ProductDealOfTheDayStatusFalse/{id}")]
     public async Task<IActionResult> ProductDealOfTheDayStatusFalse(int id)
     {
-        await _productRepository.ProductDealOfTheDayStatusChangeToFalse(id);
+        await _productRepository.ProductDealOfTheDayStatusChangeToFalseAsync(id);
         return Ok("İlanın Durumu Pasif olarak güncellendi!");
     }
 }
