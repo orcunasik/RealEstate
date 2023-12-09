@@ -47,21 +47,21 @@ public class ProductsController : Controller
     //    return View();
     //}
 
-    [HttpGet("ProductDealOfTheDayStatusChangeToFalse")]
     public async Task<IActionResult> ProductDealOfTheDayStatusChangeToFalse(int id)
     {
         bool result = await _apiClient.ProductDealOfTheDayStatusChangeToFalseAsync(id);
-        if (result)
+        if (result is false)
             return RedirectToAction(nameof(Index));
-        return View();
+        else
+            return RedirectToAction(nameof(Index));
     }
 
-    [HttpGet("ProductDealOfTheDayStatusChangeToTrue")]
     public async Task<IActionResult> ProductDealOfTheDayStatusChangeToTrue(int id)
     {
         bool result = await _apiClient.ProductDealOfTheDayStatusChangeToTrueAsync(id);
-        if(result)
+        if (result is true)
             return RedirectToAction(nameof(Index));
-        return View();
+        else
+            return RedirectToAction(nameof(Index));
     }
 }

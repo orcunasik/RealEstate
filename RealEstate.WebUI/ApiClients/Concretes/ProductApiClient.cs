@@ -2,6 +2,7 @@
 using RealEstate.WebUI.Configurations;
 using RealEstate.WebUI.Dtos.ProductDtos;
 using System.Net.Http.Json;
+using System.Text;
 
 namespace RealEstate.WebUI.ApiClients.Concretes;
 
@@ -31,14 +32,16 @@ public class ProductApiClient : IProductApiClient
     public async Task<bool> ProductDealOfTheDayStatusChangeToFalseAsync(int id)
     {
         HttpClient client = _httpClient.CreateClient();
-        HttpResponseMessage response = await client.GetAsync(_domainService.Domain() + $"api/Products/ProductDealOfTheDayStatusFalse/{id}");
+        StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PatchAsync(_domainService.Domain() + $"api/Products/ProductDealOfTheDayStatusFalse/{id}", content);
         return response.IsSuccessStatusCode;
     }
 
     public async Task<bool> ProductDealOfTheDayStatusChangeToTrueAsync(int id)
     {
         HttpClient client = _httpClient.CreateClient();
-        HttpResponseMessage response = await client.GetAsync(_domainService.Domain() + $"api/Products/ProductDealOfTheDayStatusTrue/{id}");
+        StringContent content = new StringContent("", Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PatchAsync(_domainService.Domain() + $"api/Products/ProductDealOfTheDayStatusTrue/{id}", content);
         return response.IsSuccessStatusCode;
     }
 }
