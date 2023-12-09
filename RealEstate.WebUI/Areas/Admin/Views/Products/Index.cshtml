@@ -1,4 +1,4 @@
-﻿@model List<ResultProductDto>
+﻿@model List<ResultProductWithCategoryDto>
 @{
     ViewData["Title"] = "Tüm İlanlar";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (ResultProductDto product in Model)
+                    @foreach (ResultProductWithCategoryDto product in Model)
                     {
                         <tr>
                             <th scope="row">@product.ProductId</th>
