@@ -19,7 +19,7 @@ public class ProductsController : Controller
     }
     public async Task<IActionResult> Index()
     {
-        List<ResultProductDto> products = await _apiClient.GetAllProductAsync();
+        List<ResultProductWithCategoryDto> products = await _apiClient.GetAllProductWithCategoryAsync();
         return View(products);
     }
 
@@ -50,7 +50,7 @@ public class ProductsController : Controller
     [HttpGet("ProductDealOfTheDayStatusChangeToFalse")]
     public async Task<IActionResult> ProductDealOfTheDayStatusChangeToFalse(int id)
     {
-        bool result =await _apiClient.ProductDealOfTheDayStatusChangeToFalseAsync(id);
+        bool result = await _apiClient.ProductDealOfTheDayStatusChangeToFalseAsync(id);
         if (result)
             return RedirectToAction(nameof(Index));
         return View();
