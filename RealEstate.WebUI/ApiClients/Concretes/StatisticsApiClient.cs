@@ -72,8 +72,9 @@ public class StatisticsApiClient : IStatisticsApiClient
     public async Task<string> GetCityNameByMaxProductCountAsync()
     {
         HttpClient client = _httpClient.CreateClient();
-        string? response = await client.GetFromJsonAsync<string>(_domainService.Domain() + "api/Statistics/CityNameByMaxProductCount");
-        return response;
+        HttpResponseMessage responseMessage = await client.GetAsync(_domainService.Domain() + "api/Statistics/CityNameByMaxProductCount");
+        string jsonResult = await responseMessage.Content.ReadAsStringAsync();
+        return jsonResult;
     }
 
     public async Task<int> GetDifferentCountAsync()
