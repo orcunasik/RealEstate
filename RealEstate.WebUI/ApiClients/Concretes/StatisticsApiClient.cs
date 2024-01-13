@@ -64,8 +64,9 @@ public class StatisticsApiClient : IStatisticsApiClient
     public async Task<string> GetCategoryNameByMaxProductCountAsync()
     {
         HttpClient client = _httpClient.CreateClient();
-        string? response = await client.GetFromJsonAsync<string>(_domainService.Domain() + "api/Statistics/CategoryNameByMaxProductCount");
-        return response;
+        HttpResponseMessage responseMessage = await client.GetAsync(_domainService.Domain() + "api/Statistics/CategoryNameByMaxProductCount");
+        string jsonResult = await responseMessage.Content.ReadAsStringAsync();
+        return jsonResult;
     }
 
     public async Task<string> GetCityNameByMaxProductCountAsync()
