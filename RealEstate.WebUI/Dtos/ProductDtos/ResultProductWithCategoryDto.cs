@@ -12,4 +12,5 @@ public class ResultProductWithCategoryDto
     public string CoverImage { get; set; }
     public string Address { get; set; }
     public bool IsDealOfTheDay { get; set; }
+    public DateTime Date { get; set; }
 }
