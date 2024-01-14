@@ -8,4 +8,5 @@ public interface IProductApiClient
     Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync();
     Task<bool> ProductDealOfTheDayStatusChangeToTrueAsync(int id);
     Task<bool> ProductDealOfTheDayStatusChangeToFalseAsync(int id);
+    Task<List<ResultProductWithCategoryDto>> GetLastProductsAsync();
 }

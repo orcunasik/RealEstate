@@ -1,7 +1,6 @@
 ﻿using RealEstate.WebUI.ApiClients.Abstracts;
 using RealEstate.WebUI.Configurations;
 using RealEstate.WebUI.Dtos.ProductDtos;
-using System.Net.Http.Json;
 using System.Text;
 
 namespace RealEstate.WebUI.ApiClients.Concretes;
@@ -26,6 +25,13 @@ public class ProductApiClient : IProductApiClient
     {
         HttpClient client = _httpClient.CreateClient();
         List<ResultProductWithCategoryDto>? response = await client.GetFromJsonAsync<List<ResultProductWithCategoryDto>>(_domainService.Domain() + "api/Products/ProductListWithCategory");
+        return response;
+    }
+
+    public async Task<List<ResultProductWithCategoryDto>> GetLastProductsAsync()
+    {
+        HttpClient client = _httpClient.CreateClient();
+        List<ResultProductWithCategoryDto>? response = await client.GetFromJsonAsync<List<ResultProductWithCategoryDto>>(_domainService.Domain() + "api/Products/LastProducts");
         return response;
     }
 
