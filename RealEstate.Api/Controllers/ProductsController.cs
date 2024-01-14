@@ -29,6 +29,13 @@ public class ProductsController : ControllerBase
         return Ok(productsWithCategory);
     }
 
+    [HttpGet("LastProducts")]
+    public async Task<IActionResult> LastProducts()
+    {
+        List<ResultProductWithCategoryDto> lastProducts = await _productRepository.GetLastProductsAsync();
+        return Ok(lastProducts);
+    }
+
     [HttpPatch("ProductDealOfTheDayStatusTrue/{id}")]
     public async Task<IActionResult> ProductDealOfTheDayStatusTrue(int id)
     {

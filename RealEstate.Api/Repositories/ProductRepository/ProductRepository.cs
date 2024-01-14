@@ -33,6 +33,16 @@ public class ProductRepository : IProductRepository
         }
     }
 
+    public async Task<List<ResultProductWithCategoryDto>> GetLastProductsAsync()
+    {
+        string query = "Select Top(5) * From Products inner join Categories on Products.CategoryId = Categories.CategoryId Order By ProductId Desc";
+        using (IDbConnection connection = _context.CreateConnection())
+        {
+            IEnumerable<ResultProductWithCategoryDto> products = await connection.QueryAsync<ResultProductWithCategoryDto>(query);
+            return products.ToList();
+        }
+    }
+
     public async Task ProductDealOfTheDayStatusChangeToFalseAsync(int id)
     {
         string updateQuery = "Update Products Set IsDealOfTheDay = @isDealOfTheDay where ProductId = @productId";

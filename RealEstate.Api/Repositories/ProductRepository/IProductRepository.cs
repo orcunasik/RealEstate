@@ -8,4 +8,5 @@ public interface IProductRepository
     Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync();
     Task ProductDealOfTheDayStatusChangeToTrueAsync(int id);
     Task ProductDealOfTheDayStatusChangeToFalseAsync(int id);
+    Task<List<ResultProductWithCategoryDto>> GetLastProductsAsync();
 }
