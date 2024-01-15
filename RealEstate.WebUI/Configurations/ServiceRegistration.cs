@@ -21,5 +21,6 @@ public static class ServiceRegistration
         services.AddTransient<IPopularLocationApiClient, PopularLocationApiClient>();
         services.AddTransient<ITestimonialApiClient, TestimonialApiClient>();
         services.AddTransient<IContactApiClient, ContactApiClient>();
+        services.AddTransient<IToDoListApiClient, ToDoListApiClient>();
     }
 }
