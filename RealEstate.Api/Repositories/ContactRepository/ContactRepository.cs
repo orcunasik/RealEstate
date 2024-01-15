@@ -35,7 +35,7 @@ public class ContactRepository : IContactRepository
 
     public async Task<List<LastContactResultDto>> GetLastContactsAsync()
     {
-        string listQuery = "Select * From Contacts Order By SendDate Desc";
+        string listQuery = "Select Top(4) * From Contacts Order By SendDate Desc";
         using (IDbConnection connection = _context.CreateConnection())
         {
             IEnumerable<LastContactResultDto> contacts = await connection.QueryAsync<LastContactResultDto>(listQuery);
