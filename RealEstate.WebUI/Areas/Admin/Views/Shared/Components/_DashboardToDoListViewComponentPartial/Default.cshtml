@@ -1,0 +1,33 @@
+﻿@model List<ResultToDoListDto>
+
+<div class="col-sm-12 col-md-6 col-xl-4">
+    <div class="h-100 bg-light rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">Yapılacaklar Listesi</h6>
+            <a href="">Tümünü Göster</a>
+        </div>
+        <div class="d-flex mb-2">
+            <input class="form-control bg-transparent" type="text" placeholder="Görev Girin">
+            <button type="button" class="btn btn-primary ms-2">Ekle</button>
+        </div>
+        @foreach(var toDoList in Model)
+        {
+            <div class="d-flex align-items-center border-bottom py-2">
+                <input class="form-check-input m-0" type="checkbox">
+                <div class="w-100 ms-3">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        @if(toDoList.Status is true)
+                        {
+                            <span>@toDoList.Description</span>
+                        }
+                        else
+                        {
+                            <span><del>@toDoList.Description</del></span>
+                        }
+                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
