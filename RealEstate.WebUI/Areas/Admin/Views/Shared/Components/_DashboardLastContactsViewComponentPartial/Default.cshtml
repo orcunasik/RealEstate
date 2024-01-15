@@ -1,0 +1,26 @@
+﻿@model List<LastContactResultDto>
+@{
+    int count = 0;
+}
+<div class="col-sm-12 col-md-6 col-xl-4">
+    <div class="h-100 bg-light rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <h6 class="mb-0">Son 4 Mesaj</h6>
+            <a asp-area="Admin" asp-controller="Contacts" asp-action="Index">Tüm Mesajlar</a>
+        </div>
+        @foreach (var lastContact in Model)
+        {
+            count++;
+            <div class="d-flex align-items-center border-bottom py-3">
+                <img class="rounded-circle flex-shrink-0" src="~/adminUI/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                <div class="w-100 ms-3">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-0">@lastContact.Name</h6>
+                        <small>@(((DateTime)lastContact.SendDate).ToString("dd-MMM-yyyy"))</small>
+                    </div>
+                    <span>@lastContact.Message</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
