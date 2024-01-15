@@ -8,6 +8,7 @@ using RealEstate.Api.Repositories.ProductRepository;
 using RealEstate.Api.Repositories.ServiceRepository;
 using RealEstate.Api.Repositories.StatisticsRepository;
 using RealEstate.Api.Repositories.TestimonialRepository;
+using RealEstate.Api.Repositories.ToDoListRepository;
 using RealEstate.Api.Repositories.WhoWeAreDetailRepository;
 
 namespace RealEstate.Api.Extensions;
@@ -27,5 +28,6 @@ public static class ServiceRegistration
         services.AddTransient<ITestimonialRepository, TestimonialRepository>();
         services.AddTransient<IEmployeeRepository, EmployeeRepository>();
         services.AddTransient<IContactRepository, ContactRepository>();
+        services.AddTransient<IToDoListRepository, ToDoListRepository>();
     }
 }
