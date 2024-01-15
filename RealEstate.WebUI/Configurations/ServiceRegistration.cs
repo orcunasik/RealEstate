@@ -20,5 +20,6 @@ public static class ServiceRegistration
         services.AddTransient<IBottomGridApiClient, BottomGridApiClient>();
         services.AddTransient<IPopularLocationApiClient, PopularLocationApiClient>();
         services.AddTransient<ITestimonialApiClient, TestimonialApiClient>();
+        services.AddTransient<IContactApiClient, ContactApiClient>();
     }
 }
