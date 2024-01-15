@@ -10,24 +10,32 @@
             <input class="form-control bg-transparent" type="text" placeholder="Görev Girin">
             <button type="button" class="btn btn-primary ms-2">Ekle</button>
         </div>
-        @foreach(var toDoList in Model)
+        @foreach (var toDoList in Model)
         {
-            <div class="d-flex align-items-center border-bottom py-2">
-                <input class="form-check-input m-0" type="checkbox">
-                <div class="w-100 ms-3">
-                    <div class="d-flex w-100 align-items-center justify-content-between">
-                        @if(toDoList.Status is true)
-                        {
+            @if (toDoList.Status is true)
+            {
+                <div class="d-flex align-items-center border-bottom py-2">
+                    <input class="form-check-input m-0" type="checkbox">
+                    <div class="w-100 ms-3">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
                             <span>@toDoList.Description</span>
-                        }
-                        else
-                        {
-                            <span><del>@toDoList.Description</del></span>
-                        }
-                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="d-flex align-items-center border-bottom py-2">
+                    <input class="form-check-input m-0" type="checkbox" checked>
+                    <div class="w-100 ms-3">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <span><del>@toDoList.Description</del></span>
+                            <button class="btn btn-sm text-primary"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+            }
         }
     </div>
 </div>
