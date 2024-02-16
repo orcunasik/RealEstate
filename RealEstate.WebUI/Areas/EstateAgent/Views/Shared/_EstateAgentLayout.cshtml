@@ -1,0 +1,32 @@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+
+@await Component.InvokeAsync("_EstateAgentHeaderViewComponentPartial")
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        @await Component.InvokeAsync("_EstateAgentSpinnerViewComponentPartial")
+        @await Component.InvokeAsync("_EstateAgentSidebarViewComponentPartial")
+        
+        <!-- Content Start -->
+        <div class="content">
+            @await Component.InvokeAsync("_EstateAgentNavbarViewComponentPartial")
+            <!-- Blank Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- Blank End -->
+            @await Component.InvokeAsync("_EstateAgentFooterViewComponentPartial")
+        </div>
+        <!-- Content End -->
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+    @await Component.InvokeAsync("_EstateAgentScriptsViewComponentPartial")
+</body>
+</html>
