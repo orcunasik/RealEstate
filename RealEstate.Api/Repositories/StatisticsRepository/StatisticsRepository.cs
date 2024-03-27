@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using RealEstate.Api.Dtos.CategoryDtos;
 using RealEstate.Api.Models.DapperContext;
 
 namespace RealEstate.Api.Repositories.StatisticsRepository;
