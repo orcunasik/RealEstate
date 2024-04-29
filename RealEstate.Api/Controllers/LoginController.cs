@@ -21,8 +21,8 @@ public class LoginController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SignIn(CreateLoginDto loginDto)
     {
-        string query = "Select * From AppUser Where UserName=@userName and Password=@password";
-        string queryForUserId = "Select UserId From AppUser Where UserName=@userName and Password=@password";
+        string query = "Select * From AppUsers Where UserName=@userName and Password=@password";
+        string queryForUserId = "Select UserId From AppUsers Where UserName=@userName and Password=@password";
         DynamicParameters parameters = new();
         parameters.Add("@userName", loginDto.UserName);
         parameters.Add("@password", loginDto.Password);
