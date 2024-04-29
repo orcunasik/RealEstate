@@ -92,10 +92,10 @@ public class StatisticsApiClient : IStatisticsApiClient
         return jsonResult;
     }
 
-    public async Task<decimal> GetLastProdcutPriceAsync()
+    public async Task<decimal> GetLastProductPriceAsync()
     {
         HttpClient client = _httpClient.CreateClient();
-        decimal response = await client.GetFromJsonAsync<decimal>(_domainService.Domain() + "api/Statistics/LastProdcutPrice");
+        decimal response = await client.GetFromJsonAsync<decimal>(_domainService.Domain() + "api/Statistics/LastProductPrice");
         return response;
     }
 

@@ -71,7 +71,7 @@ public class StatisticsController : Controller
         #endregion
 
         #region LastProductPrice
-        decimal lastProductPrice = await _apiClient.GetLastProdcutPriceAsync();
+        decimal lastProductPrice = await _apiClient.GetLastProductPriceAsync();
         ViewBag.LastProductPrice = lastProductPrice;
         #endregion
 
