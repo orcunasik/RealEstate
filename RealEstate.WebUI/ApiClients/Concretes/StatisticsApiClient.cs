@@ -87,8 +87,9 @@ public class StatisticsApiClient : IStatisticsApiClient
     public async Task<string> GetEmployeeNameByMaxProductCountAsync()
     {
         HttpClient client = _httpClient.CreateClient();
-        string? response = await client.GetFromJsonAsync<string>(_domainService.Domain() + "api/Statistics/EmployeeNameByMaxProductCount");
-        return response;
+        HttpResponseMessage responseMessage = await client.GetAsync(_domainService.Domain() + "api/Statistics/EmployeeNameByMaxProductCount");
+        string jsonResult = await responseMessage.Content.ReadAsStringAsync();
+        return jsonResult;
     }
 
     public async Task<decimal> GetLastProdcutPriceAsync()
@@ -101,15 +102,17 @@ public class StatisticsApiClient : IStatisticsApiClient
     public async Task<string> GetNewestBuildingYearAsync()
     {
         HttpClient client = _httpClient.CreateClient();
-        string? response = await client.GetFromJsonAsync<string>(_domainService.Domain() + "api/Statistics/NewestBuildingYear");
-        return response;
+        HttpResponseMessage responseMessage = await client.GetAsync(_domainService.Domain() + "api/Statistics/NewestBuildingYear");
+        string jsonResult = await responseMessage.Content.ReadAsStringAsync();
+        return jsonResult;
     }
 
     public async Task<string> GetOldestBuildingYearAsync()
     {
         HttpClient client = _httpClient.CreateClient();
-        string? response = await client.GetFromJsonAsync<string>(_domainService.Domain() + "api/Statistics/OldestBuildingYear");
-        return response;
+        HttpResponseMessage responseMessage = await client.GetAsync(_domainService.Domain() + "api/Statistics/OldestBuildingYear");
+        string jsonResult = await responseMessage.Content.ReadAsStringAsync();
+        return jsonResult;
     }
 
     public async Task<int> GetPassiveCategoryCountAsync()
