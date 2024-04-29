@@ -1,4 +1,5 @@
-﻿using RealEstate.WebUI.ApiClients.Abstracts;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using RealEstate.WebUI.ApiClients.Abstracts;
 using RealEstate.WebUI.ApiClients.Concretes;
 
 namespace RealEstate.WebUI.Configurations;
@@ -8,6 +9,16 @@ public static class ServiceRegistration
     public static void LoadMyServices(this IServiceCollection services)
     {
         services.AddHttpClient();
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
+        {
+            opt.LoginPath = "/Login/Index/";
+            opt.LogoutPath = "Login/LogOut/";
+            opt.AccessDeniedPath = "/Pages/AccessDenied/";
+            opt.Cookie.HttpOnly = true;
+            opt.Cookie.SameSite = SameSiteMode.Strict;
+            opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            opt.Cookie.Name = "RealEstateJwt";
+        });
 
         services.AddTransient<IDomainService, DomainService>();
 
