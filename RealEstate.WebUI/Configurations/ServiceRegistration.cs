@@ -12,7 +12,7 @@ public static class ServiceRegistration
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
         {
             opt.LoginPath = "/Login/Index/";
-            opt.LogoutPath = "Login/LogOut/";
+            opt.LogoutPath = "/Login/LogOut/";
             opt.AccessDeniedPath = "/Pages/AccessDenied/";
             opt.Cookie.HttpOnly = true;
             opt.Cookie.SameSite = SameSiteMode.Strict;
