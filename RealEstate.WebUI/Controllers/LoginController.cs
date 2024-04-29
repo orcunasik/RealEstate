@@ -55,7 +55,7 @@ public class LoginController : Controller
                         IsPersistent = true
                     };
                     await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProps);
-                    return RedirectToAction("Index","Employee");
+                    return RedirectToAction("Index", "Employee", new { Area = "Admin" });
                 }
             }
         }
