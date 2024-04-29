@@ -9,7 +9,7 @@ public interface IStatisticsApiClient
     Task<int> GetApartmentCountAsync();
     Task<int> GetAvgRoomCountAsync();
     Task<int> GetActiveEmployeeCountAsync();
-    Task<int> GetDifferentCountAsync();
+    Task<int> GetDifferentCityCountAsync();
 
     Task<decimal> GetLastProdcutPriceAsync();
     Task<decimal> GetAvgProductPriceByRentAsync();
