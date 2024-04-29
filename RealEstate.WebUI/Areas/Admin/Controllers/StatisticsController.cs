@@ -61,7 +61,7 @@ public class StatisticsController : Controller
         #endregion
 
         #region DifferentCityCount
-        int differentCount = await _apiClient.GetDifferentCountAsync();
+        int differentCount = await _apiClient.GetDifferentCityCountAsync();
         ViewBag.DifferentCityCount = differentCount;
         #endregion
 
