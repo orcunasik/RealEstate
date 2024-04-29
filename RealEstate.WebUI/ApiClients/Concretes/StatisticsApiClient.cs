@@ -77,10 +77,10 @@ public class StatisticsApiClient : IStatisticsApiClient
         return jsonResult;
     }
 
-    public async Task<int> GetDifferentCountAsync()
+    public async Task<int> GetDifferentCityCountAsync()
     {
         HttpClient client = _httpClient.CreateClient();
-        int response = await client.GetFromJsonAsync<int>(_domainService.Domain() + "api/Statistics/DifferentCount");
+        int response = await client.GetFromJsonAsync<int>(_domainService.Domain() + "api/Statistics/DifferentCityCount");
         return response;
     }
 
