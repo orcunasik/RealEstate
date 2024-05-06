@@ -17,9 +17,14 @@ public class EmployeesController : Controller
     }
     public async Task<IActionResult> Index()
     {
-        List<ResultEmployeeDto> employees = await _apiClient.GetAllAsync();
-        if (employees is not null)
-            return View(employees);
+        var user = User.Claims;
+        var token = user.FirstOrDefault(u => u.Type == "realestatetoken")?.Value;
+        if(token is not null)
+        {
+            List<ResultEmployeeDto> employees = await _apiClient.GetAllAsync();
+            if (employees is not null)
+                return View(employees);
+        }
         return View();
     }
 
