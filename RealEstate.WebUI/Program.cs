@@ -1,9 +1,12 @@
 using RealEstate.WebUI.Configurations;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.LoadMyServices();
+
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
 var app = builder.Build();
 
